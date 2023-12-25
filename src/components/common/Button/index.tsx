@@ -10,6 +10,8 @@ interface Props extends TouchableOpacityProps {
 const Button: FC<Props> = ({text, variant, ...props}) => {
    let variantStyles = {button: null, buttonText: null}
 
+
+//    variant types and styles
    switch (variant){
 
     case "coloured":

@@ -26,6 +26,8 @@ const OnboardingScreen = () => {
   return (
     <>
     <View style={styles.container}>
+
+      {/* flatlist items */}
       <View>
         <Animated.FlatList
         ref={(ref)=>{flatListRef.current = ref}}
@@ -47,11 +49,14 @@ const OnboardingScreen = () => {
         />
       </View>
     </View>
+ 
 
+    {/* flatlist  counter items  */}
     <View style={styles.animationContainner}>
     {onboardingData.map(({}, index:number) => <Text key={index} style={[styles.animationItem, (index ===  currentIndex ? {paddingHorizontal: 10, backgroundColor: primaryColor}: {paddingHorizontal: 4, backgroundColor: grayColor})]}> </Text>)}
     </View>
 
+    {/* buttons */}
     <View style={styles.buttons}>
       <View style={{marginVertical: 4}}>
          <UI.Button text='Create Account' variant="coloured"/>
