@@ -1,15 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useRef, useState, FC } from 'react';
+import { View, SafeAreaView, Text, Dimensions, StyleSheet } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { primaryColor, grayColor } from '../../components/common/variables';
 import onboardingData from '../../constants/onboardingData';
 import OnboardingListItem from '../../components/main/OnboardingListItem';
-import * as UI from '../../components/common/index'
+import * as UI from '../../components/common/index';
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 const ITEM_WIDTH = width;
 
-const OnboardingScreen = () => {
+interface Props {
+  navigation: any
+}
+
+const OnboardingScreen:FC<Props> = ({ navigation }) => {
 
   const [currentIndex, setCurrentIndex] = useState(1);
   let flatListRef = useRef();
@@ -25,7 +29,7 @@ const OnboardingScreen = () => {
 
   return (
     <>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
       {/* flatlist items */}
       <View>
@@ -48,7 +52,7 @@ const OnboardingScreen = () => {
         onViewableItemsChanged={onViewRef.current}
         />
       </View>
-    </View>
+    </SafeAreaView>
  
 
     {/* flatlist  counter items  */}
@@ -59,11 +63,11 @@ const OnboardingScreen = () => {
     {/* buttons */}
     <View style={styles.buttons}>
       <View style={{marginVertical: 4}}>
-         <UI.Button text='Create Account' variant="coloured"/>
+         <UI.Button text='Create Account' variant="coloured" onPress={()=>navigation.navigate("SignUp")}/>
       </View>
 
-      <View style={{marginVertical: 4}}>
-         <UI.Button text="Sign In" variant="light"/>
+      <View style={{marginVertical: 4}} >
+         <UI.Button text="Sign In" variant="light"  onPress={()=>navigation.navigate("LogIn")}/>
       </View>
     </View>
     </>
