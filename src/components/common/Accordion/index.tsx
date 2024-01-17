@@ -9,7 +9,7 @@ import USAIcon from '../../../assets/icons/USA'
 
 const Accordion = () => {
     const [currency, setCurrency] = React.useState("Naira");
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     // set currency and close list items
     const setTheCurrency = (value)=> {

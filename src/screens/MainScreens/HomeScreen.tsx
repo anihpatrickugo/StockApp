@@ -8,12 +8,21 @@ import Withdraw from '../../assets/icons/Withdraw';
 import Invest from '../../assets/icons/Invest';
 import BellOutline from '../../assets/icons/BellOutline';
 import recentTransactions from '../../constants/recentTransactions';
+import FundAlertModal from '../../components/main/FundAlert.Modal';
 
 
 const LoginScreen = ({navigation}) => {
     const [showBalance, setShowBalance] = React.useState(true)
+    
+    const [modalVisible, setModalVisible] = React.useState(false);
+
+
+
   return (
     <SafeAreaView style={styles.containner}>
+       
+       {modalVisible && (<FundAlertModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation}/>)}
+
         {/* top bar header */}
         <View style={styles.topHeader}>
             <View style={styles.profileLink}>
@@ -21,7 +30,7 @@ const LoginScreen = ({navigation}) => {
                <UI.CustomText size='md' bold style={{marginLeft: 10}}>Hi Paul</UI.CustomText>
             </View>
 
-            <Pressable>
+            <Pressable onPress={()=>navigation.navigate('Notifications')}>
                 <BellOutline height={25} width={25}/>
             </Pressable>
         </View>
@@ -48,7 +57,7 @@ const LoginScreen = ({navigation}) => {
 
         {/* actions */}
         <View style={styles.actions}>
-            <TouchableOpacity style={styles.actionItems}>
+            <TouchableOpacity style={styles.actionItems} onPress={()=>setModalVisible(!modalVisible)}>
                 <Fund height={65} width={65}/>
                 <UI.CustomText size='sm'>Fund</UI.CustomText>
             </TouchableOpacity>

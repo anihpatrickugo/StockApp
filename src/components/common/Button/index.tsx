@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { Text, TouchableOpacity, StyleSheet, TouchableOpacityProps } from 'react-native'
-import { primaryColor } from '../variables'
+import { primaryColor, grayColor } from '../variables'
 
 interface Props extends TouchableOpacityProps {
     text: string
-    variant: "coloured" | "light"
+    variant: "coloured" | "light" | "light-gray"
 }
 
 const Button: FC<Props> = ({text, variant, ...props}) => {
@@ -22,6 +22,12 @@ const Button: FC<Props> = ({text, variant, ...props}) => {
         variantStyles =  { 
             button: {backgroundColor: "transparent",  borderWidth: 1, borderColor: primaryColor},  
             buttonText: {color: primaryColor }}
+        break;
+
+    case "light-gray":
+        variantStyles =  { 
+            button: {backgroundColor: "transparent",  borderWidth: 1, borderColor: grayColor},  
+            buttonText: {color: '#344054', fontWeight: '700' }}
         break;
 
     default: 
