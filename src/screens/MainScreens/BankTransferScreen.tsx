@@ -1,12 +1,90 @@
 import React from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Pressable, Platform, ToastAndroid} from 'react-native'
+import * as Clipboard from 'expo-clipboard';
+import * as UI from '../../components/common'
+import WemaIcon from '../../assets/icons/WemaIcon'
+import NumIcon from '../../assets/icons/123'
+import UserIcon from '../../assets/icons/PurpleAvatar'
+import CopyIcon from '../../assets/icons/Copy'
+import { grayLightColor } from '../../components/common/variables';
 
-const BankTransferScreen = () => {
+
+const BankTransferScreen = ({navigation}) => {
+
+  const [copied, setCopied] = React.useState(false)
+
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync('8004175407');
+    // Display a success message 
+    if (Platform.OS === 'android') { 
+      ToastAndroid.show('Account Number copied to clipboard!', 
+          ToastAndroid.SHORT); 
+  } else if (Platform.OS === 'ios') { 
+      // console.log("ios")
+  } 
+
+  setCopied(true);
+  };
+
+
   return (
-    <SafeAreaView>
-      <Text>Transfer screen</Text>
+    <SafeAreaView style={styles.containner}>
+      <UI.BackButton navigation={navigation} screenName='Bank Transfer'/>
+      
+      {/* Transfer Details */}
+      <View style={[styles.transferDetailsContainer, {backgroundColor: copied && grayLightColor}]}>
+        
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+          <WemaIcon width={45} height={45}/>
+          <View>
+            <UI.CustomText size='xs'>Bank Name</UI.CustomText>
+            <UI.CustomText size='md'>Wema Bank PLC</UI.CustomText>
+          </View>
+        </View>
+
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+          <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+              <NumIcon width={45} height={45}/>
+              <View>
+                 <UI.CustomText size='xs'>Account number</UI.CustomText>
+                 <UI.CustomText size='md'>8004175407</UI.CustomText>
+              </View>
+          </View>
+          <Pressable onPress={copyToClipboard}>
+               <CopyIcon width={25} height={25}/>
+          </Pressable>
+        </View>
+
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+          <UserIcon width={45} height={45}/>
+          <View>
+            <UI.CustomText size='xs'>Account name</UI.CustomText>
+            <UI.CustomText size='md'>Stock Payment</UI.CustomText>
+          </View>
+        </View>
+
+      </View>
+
+      <UI.Button text='I’ve made the transfer' variant='coloured'/>
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  containner: {
+    paddingTop: StatusBar.currentHeight,
+    padding: 14,
+    alignItems: 'center',
+    backgroundColor: "#FFFFFF"
+   },
+
+   transferDetailsContainer : {
+    width: '100%',
+    marginVertical: 16
+   },
+})
 
 export default BankTransferScreen

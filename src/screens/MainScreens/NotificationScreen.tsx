@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text, StyleSheet, StatusBar, SafeAreaView, View, Pressable, FlatList } from 'react-native'
+import { StyleSheet, StatusBar, SafeAreaView, View, Pressable, FlatList } from 'react-native'
 import * as UI from '../../components/common'
-import { AntDesign } from '@expo/vector-icons';
 import notifications from '../../constants/notifications';
 import NotificationIcon from '../../assets/icons/ColouredNotificationBell'
 import { grayLightColor } from '../../components/common/variables';
@@ -9,14 +8,7 @@ import { grayLightColor } from '../../components/common/variables';
 const NotificationScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.containner}>
-
-      <Pressable  style={styles.backButton} onPress={()=>navigation.goBack()}>
-        <AntDesign name="left" size={24} color="black" />
-           <UI.CustomText size='md' style={{marginLeft: 10, fontWeight: '600'}}>
-             Notifications
-            </UI.CustomText>
-        </Pressable>
-
+        <UI.BackButton navigation={navigation} screenName='Notifications'/>
         <FlatList
                data={notifications}
                keyExtractor={(item, index) => index.toString()}
@@ -42,12 +34,6 @@ const styles = StyleSheet.create({
         padding: 14,
         alignItems: 'center',
         backgroundColor: "#FFFFFF"
-    },
-
-    backButton: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center'
     },
 
     notificationItem: {

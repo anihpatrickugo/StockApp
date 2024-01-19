@@ -3,11 +3,12 @@ import { Text, TouchableOpacity, StyleSheet, TouchableOpacityProps } from 'react
 import { primaryColor, grayColor } from '../variables'
 
 interface Props extends TouchableOpacityProps {
-    text: string
-    variant: "coloured" | "light" | "light-gray"
+    text: string,
+    variant: "coloured" | "light" | "light-gray",
+    noBorder?:  boolean;
 }
 
-const Button: FC<Props> = ({text, variant, ...props}) => {
+const Button: FC<Props> = ({text, variant, noBorder, ...props}) => {
    let variantStyles = {button: null, buttonText: null}
 
 
@@ -20,7 +21,7 @@ const Button: FC<Props> = ({text, variant, ...props}) => {
 
     case "light":
         variantStyles =  { 
-            button: {backgroundColor: "transparent",  borderWidth: 1, borderColor: primaryColor},  
+            button: {backgroundColor: "transparent",  borderWidth: noBorder ? 0 : 1, borderColor: primaryColor},  
             buttonText: {color: primaryColor }}
         break;
 

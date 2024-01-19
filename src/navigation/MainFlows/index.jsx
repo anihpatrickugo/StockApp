@@ -20,6 +20,7 @@ const MainFlow = () => {
         tabBarStyle: { fontSize: 16, backgroundColor: "#FFFFFF" },
         tabBarActiveTintColor: primaryColor,
         tabBarInactiveTintColor: darkGrayColor,
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
