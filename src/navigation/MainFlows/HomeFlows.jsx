@@ -3,6 +3,8 @@ import HomeScreen from "../../screens/MainScreens/HomeScreen";
 import NotificationScreen from "../../screens/MainScreens/NotificationScreen";
 import BankTransferScreen from "../../screens/MainScreens/BankTransferScreen";
 import DebitCardScreen from "../../screens/MainScreens/DebitCardScreen";
+import NewCardScreen from "../../screens/MainScreens/NewCardScreen";
+import FundSuccessScreen from "../../screens/MainScreens/FundSuccessScreen";
 const Stack = createNativeStackNavigator();
 
 const HomeFlows = () => {
@@ -12,13 +14,17 @@ const HomeFlows = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Index" component={HomeScreen} />
+      <Stack.Screen name="Home-Index" component={HomeScreen} />
 
       <Stack.Screen name="Notifications" component={NotificationScreen} />
 
       <Stack.Screen name="Bank-Transfer-Fund" component={BankTransferScreen} />
 
       <Stack.Screen name="Debit-Card-Fund" component={DebitCardScreen} />
+
+      <Stack.Screen name="New-Card" component={NewCardScreen} />
+
+      <Stack.Screen name="Fund-Success" component={FundSuccessScreen} />
     </Stack.Navigator>
   );
 };

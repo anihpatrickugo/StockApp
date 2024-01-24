@@ -4,3 +4,4 @@ export * from './BackButton';
 export * from './FormInput';
 export * from './Text';
 export * from './TextInput';
+export * from './Toggle';

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Modal} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar} from 'react-native'
 import { RadioButton } from 'react-native-paper'; 
 import * as UI from '../../components/common'
 import AccessIcon from '../../assets/icons/AccessBank'
@@ -58,11 +58,11 @@ const DebitCardScreen = ({navigation}) => {
       </View>
 
       <View style={styles.button}>
-         <UI.Button text='Fund account' variant='coloured'/>
+         <UI.Button text='Fund account' variant='coloured' onPress={()=>navigation.navigate("Fund-Success")}/>
       </View>
      
       <View style={styles.button}>
-        <UI.Button text='Add new card +' variant='light' noBorder/>
+        <UI.Button text='Add new card +' variant='light' noBorder onPress={()=>navigation.navigate("New-Card")}/>
       </View>
     </SafeAreaView>
   )

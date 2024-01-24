@@ -6,10 +6,10 @@ import { TextInput } from 'react-native-gesture-handler'
 interface Props extends TextInputProps {
 }
 
-const FormInput: FC<Props> = ({children, ...props}) => {
+const FormInput: FC<Props> = ({children, style, ...props}) => {
 
 
- return  <TextInput style={styles.inputField} {...props}>{children}</TextInput>
+ return  <TextInput style={[style, styles.inputField]} {...props}>{children}</TextInput>
 
 }
 

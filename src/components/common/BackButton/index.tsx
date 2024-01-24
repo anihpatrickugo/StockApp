@@ -1,7 +1,6 @@
 import React from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet, Text} from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import * as UI from '../index'
 
 interface Props {
     navigation: any,
@@ -12,9 +11,9 @@ const BackButton: React.FC<Props> = ({navigation, screenName}) => {
   return (
     <Pressable  style={styles.backButton} onPress={()=>navigation.goBack()}>
         <AntDesign name="left" size={24} color="black" />
-           <UI.CustomText size='md' style={{marginLeft: 10, fontWeight: '600'}}>
+           <Text style={{marginLeft: 10, fontWeight: '600', fontSize: 16, lineHeight: 30}}>
              {screenName}
-            </UI.CustomText>
+            </Text>
     </Pressable>
   )
 }
@@ -23,7 +22,8 @@ const styles = StyleSheet.create({
     backButton: {
         width: '100%',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginVertical: 20
     },
 })
 export {BackButton}

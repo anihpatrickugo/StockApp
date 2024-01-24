@@ -8,7 +8,7 @@ interface Props extends TouchableOpacityProps {
     noBorder?:  boolean;
 }
 
-const Button: FC<Props> = ({text, variant, noBorder, ...props}) => {
+const Button: FC<Props> = ({text, variant, noBorder, style, ...props}) => {
    let variantStyles = {button: null, buttonText: null}
 
 
@@ -37,7 +37,7 @@ const Button: FC<Props> = ({text, variant, noBorder, ...props}) => {
    }
 
   return (
-    <TouchableOpacity style={[styles.button, variantStyles.button]} {...props}>
+    <TouchableOpacity style={[style, styles.button, variantStyles.button]} {...props}>
             <Text style={[styles.buttonText, variantStyles.buttonText]}>{text}</Text>
     </TouchableOpacity>
   )
