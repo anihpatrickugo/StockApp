@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeFlows from "./HomeFlows";
+import InvestFlows from "./InvestFlows";
 import InvestScreen from "../../screens/MainScreens/InvestScreen";
 import TransanctionsScreen from "../../screens/MainScreens/TransanctionsScreen";
 import MoreScreen from "../../screens/MainScreens/MoreScreen";
@@ -35,7 +36,7 @@ const MainFlow = () => {
 
       <Tab.Screen
         name="Invest"
-        component={InvestScreen}
+        component={InvestFlows}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <ChartIcon width={size} height={size} color={color} />

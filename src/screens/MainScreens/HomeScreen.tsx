@@ -11,7 +11,7 @@ import recentTransactions from '../../constants/recentTransactions';
 import FundAlertModal from '../../components/main/FundAlert.Modal';
 
 
-const LoginScreen = ({navigation}) => {
+const HomeScreen = ({navigation}) => {
     const [showBalance, setShowBalance] = React.useState(true)
     
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -76,7 +76,7 @@ const LoginScreen = ({navigation}) => {
 
 
         {/* recent transanctions */}
-        <View style={{ width: '100%', marginTop: 20,}}>
+        <View style={{ width: '100%', marginTop: 45,}}>
             <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Recent Transanctions</UI.CustomText>
 
              <FlatList
@@ -86,7 +86,7 @@ const LoginScreen = ({navigation}) => {
                style={{width: '100%', height: 300}}
                renderItem={
                 ({item}) => (
-                    <Pressable style={styles.transactionItem}>
+                    <TouchableOpacity style={styles.transactionItem}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                             <View style={{marginLeft: 6}}>
@@ -96,7 +96,7 @@ const LoginScreen = ({navigation}) => {
                         </View>
 
                         <UI.CustomText size='md'>- $1500.0</UI.CustomText>
-                    </Pressable>
+                    </TouchableOpacity>
                 )
                }
                showsVerticalScrollIndicator={false}
@@ -151,10 +151,10 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 8,
+        paddingVertical: 12,
         borderBottomWidth: 1,
         borderBottomColor: grayLightColor,
     
     }
 })
-export default LoginScreen
+export default HomeScreen
