@@ -1,14 +1,15 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity, FlatList} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
-import {grayLightColor, primaryColor} from '../../components/common/variables'
+import {primaryColor} from '../../components/common/variables'
 import Fund from '../../assets/icons/Fund';
 import Withdraw from '../../assets/icons/Withdraw';
 import Invest from '../../assets/icons/Invest';
 import BellOutline from '../../assets/icons/BellOutline';
 import recentTransactions from '../../constants/recentTransactions';
 import FundAlertModal from '../../components/main/FundAlert.Modal';
+import TransactionList from '../../components/main/TransactionList';
 
 
 const HomeScreen = ({navigation}) => {
@@ -19,7 +20,7 @@ const HomeScreen = ({navigation}) => {
 
 
   return (
-    <SafeAreaView style={styles.containner}>
+    <SafeAreaView style={[styles.containner, {backgroundColor: modalVisible ? "gray" : "#FFFFFF"}]}>
        
        {modalVisible && (<FundAlertModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation}/>)}
 
@@ -78,29 +79,11 @@ const HomeScreen = ({navigation}) => {
         {/* recent transanctions */}
         <View style={{ width: '100%', marginTop: 45,}}>
             <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Recent Transanctions</UI.CustomText>
-
-             <FlatList
-               overScrollMode='never'
-               data={recentTransactions}
-               keyExtractor={(item, index) => index.toString()}
-               style={{width: '100%', height: 300}}
-               renderItem={
-                ({item}) => (
-                    <TouchableOpacity style={styles.transactionItem}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
-                            <View style={{marginLeft: 6}}>
-                               <UI.CustomText size='sm'>{item.title}</UI.CustomText>
-                               <UI.CustomText size='xs'>Oct 03, 08:52</UI.CustomText>
-                            </View>
-                        </View>
-
-                        <UI.CustomText size='md'>- $1500.0</UI.CustomText>
-                    </TouchableOpacity>
-                )
-               }
-               showsVerticalScrollIndicator={false}
-             />
+            <TransactionList
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            recentTransactions={recentTransactions}
+            />         
         </View>
 
     </SafeAreaView>
@@ -113,7 +96,6 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         padding: 14,
         alignItems: 'center',
-        backgroundColor: "#FFFFFF"
     },
 
     topHeader: {
@@ -146,15 +128,5 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
    
-
-    transactionItem: {
-        width: "100%",
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: grayLightColor,
-    
-    }
 })
 export default HomeScreen

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { StyleSheet, TextInputProps } from 'react-native'
+import { StyleSheet, TextInputProps, } from 'react-native'
 import { grayColor, secondaryColor } from '../variables'
 import { TextInput } from 'react-native-gesture-handler'
 
@@ -9,7 +9,7 @@ interface Props extends TextInputProps {
 const FormInput: FC<Props> = ({children, style, ...props}) => {
 
 
- return  <TextInput style={[style, styles.inputField]} {...props}>{children}</TextInput>
+ return  <TextInput style={[styles.inputField, style]} {...props}>{children}</TextInput>
 
 }
 

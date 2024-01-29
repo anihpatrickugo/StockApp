@@ -66,7 +66,7 @@ const AssetDetailScreen = ({navigation, route}) => {
           {/* buttons */}
           <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
                 <UI.SmallButton size="large" text='Sell' variant='light'/>
-                <UI.SmallButton size="large" text='Buy' variant='coloured'/>
+                <UI.SmallButton size="large" text='Buy' variant='coloured' onPress={()=>navigation.navigate("Buy-Asset", {item})}/>
                 
             </View>
 

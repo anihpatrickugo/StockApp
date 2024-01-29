@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeFlows from "./HomeFlows";
 import InvestFlows from "./InvestFlows";
 import InvestScreen from "../../screens/MainScreens/InvestScreen";

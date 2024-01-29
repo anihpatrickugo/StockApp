@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet, Pressable, Text } from 'react-native'
-// import * as UI from '../index'
 import { AntDesign } from '@expo/vector-icons';
 import { primaryColor } from '../variables';
 import NigeriaIcon from '../../../assets/icons/Nigeria'
