@@ -1,69 +1,29 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeFlows from "./HomeFlows";
-import InvestFlows from "./InvestFlows";
-import InvestScreen from "../../screens/MainScreens/InvestScreen";
-import TransanctionsScreen from "../../screens/MainScreens/TransanctionsScreen";
-import MoreScreen from "../../screens/MainScreens/MoreScreen";
-import HomeIcon from "../../assets/icons/Home";
-import ChartIcon from "../../assets/icons/Chart";
-import TransactionIcon from "../../assets/icons/Coin";
-import MoreIcon from "../../assets/icons/More";
+import TabFlows from "./TabFlows";
+import FundSuccesScreen from "../../screens/MainScreens/FundSuccessScreen";
+import BuyAssetScreen from "../../screens/MainScreens/BuyAssetScreen";
+import ConfirmStockScreen from "../../screens/MainScreens/ConfirmStockScreen";
+import BuyAssetSuccesScreen from "../../screens/MainScreens/BuyAssetSuccessScreen";
 
-import { darkGrayColor, primaryColor } from "../../components/common/variables";
-
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const MainFlow = () => {
   return (
-    <Tab.Navigator
+    <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { fontSize: 16, backgroundColor: "#FFFFFF" },
-        tabBarActiveTintColor: primaryColor,
-        tabBarInactiveTintColor: darkGrayColor,
-        tabBarHideOnKeyboard: true,
       }}
     >
-      <Tab.Screen
-        name="Home"
-        component={HomeFlows}
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <HomeIcon width={size} height={size} color={color} />
-          ),
-        }}
-      />
+      <Stack.Screen name="Home-Index" component={TabFlows} />
 
-      <Tab.Screen
-        name="Invest"
-        component={InvestFlows}
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <ChartIcon width={size} height={size} color={color} />
-          ),
-        }}
-      />
+      <Stack.Screen name="Fund-Success" component={FundSuccesScreen} />
 
-      <Tab.Screen
-        name="Transanctions"
-        component={TransanctionsScreen}
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TransactionIcon width={size} height={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="More"
-        component={MoreScreen}
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <MoreIcon width={size} height={size} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      <Stack.Screen name="Buy-Asset" component={BuyAssetScreen} />
+
+      <Stack.Screen name="Confirm-Buy" component={ConfirmStockScreen} />
+
+      <Stack.Screen name="Buy-Success" component={BuyAssetSuccesScreen} />
+    </Stack.Navigator>
   );
 };
 

@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     buttonContainner: {
         width: '100%', 
         position: 'absolute', 
-        bottom: 50
+        bottom: 20
     }
 })
 export default FundSuccesScreen

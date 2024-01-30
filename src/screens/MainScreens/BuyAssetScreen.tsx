@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
   containner: {
     paddingTop: StatusBar.currentHeight,
     padding: 14,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width: "100%",
    },
 })
 

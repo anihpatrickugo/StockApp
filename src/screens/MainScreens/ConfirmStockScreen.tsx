@@ -1,9 +1,11 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Image, Modal} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Image, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
 import { grayLightColor, primaryColor, darkGrayColor} from '../../components/common/variables';
 import ConfirmStockModal from '../../components/main/ConfirmStockModal';
 
+
+const {width, height} = Dimensions.get("screen")
 
 const ConfirmStockScreen = ({navigation, route}) => {
 
@@ -68,6 +70,8 @@ const styles = StyleSheet.create({
   containner: {
     paddingTop: StatusBar.currentHeight,
     padding: 14,
+    width: width,
+    height: height
    },
    underlineStyleBase: {
     width: 45,

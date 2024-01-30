@@ -1,10 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "../../screens/MainScreens/HomeScreen";
-import NotificationScreen from "../../screens/MainScreens/NotificationScreen";
-import BankTransferScreen from "../../screens/MainScreens/BankTransferScreen";
-import DebitCardScreen from "../../screens/MainScreens/DebitCardScreen";
-import NewCardScreen from "../../screens/MainScreens/NewCardScreen";
-import FundSuccessScreen from "../../screens/MainScreens/FundSuccessScreen";
+import HomeScreen from "../../../screens/MainScreens/HomeScreen";
+import NotificationScreen from "../../../screens/MainScreens/NotificationScreen";
+import BankTransferScreen from "../../../screens/MainScreens/BankTransferScreen";
+import DebitCardScreen from "../../../screens/MainScreens/DebitCardScreen";
+import NewCardScreen from "../../../screens/MainScreens/NewCardScreen";
 const Stack = createNativeStackNavigator();
 
 const HomeFlows = () => {
@@ -23,8 +22,6 @@ const HomeFlows = () => {
       <Stack.Screen name="Debit-Card-Fund" component={DebitCardScreen} />
 
       <Stack.Screen name="New-Card" component={NewCardScreen} />
-
-      <Stack.Screen name="Fund-Success" component={FundSuccessScreen} />
     </Stack.Navigator>
   );
 };
