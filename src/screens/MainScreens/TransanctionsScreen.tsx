@@ -4,6 +4,8 @@ import * as UI from '../../components/common'
 import TransactionList from '../../components/main/TransactionList'
 import recentTransactions from '../../constants/recentTransactions'
 
+const { width, height} = Dimensions.get("screen")
+
 const TransanctionsScreen = () => {
   return (
     <SafeAreaView style={styles.containner}>
@@ -25,7 +27,8 @@ const styles = StyleSheet.create({
   containner: {
     paddingTop: StatusBar.currentHeight,
     padding: 14,
-    height: Dimensions.get('window').height
+    height: height,
+    width: width
 },
 })
 export default TransanctionsScreen

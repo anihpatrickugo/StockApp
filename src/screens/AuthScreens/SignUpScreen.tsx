@@ -1,12 +1,17 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Pressable} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions} from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
 import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
 import GoogleIcon from '../../assets/icons/Google';
 
+
+const { width, height} = Dimensions.get("screen")
+
+
 const SignUpScreen = ({navigation}) => {
+
   return (
     <SafeAreaView style={styles.containner}>
       
@@ -91,6 +96,8 @@ const styles = StyleSheet.create({
     containner: {
         paddingTop: StatusBar.currentHeight,
         padding: 14,
+        width: width,
+        height: height
     },
 
     image: {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Pressable, Platform, ToastAndroid} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Pressable, Platform, ToastAndroid, Dimensions} from 'react-native'
 import * as Clipboard from 'expo-clipboard';
 import * as UI from '../../components/common'
 import WemaIcon from '../../assets/icons/WemaIcon'
@@ -7,6 +7,8 @@ import NumIcon from '../../assets/icons/123'
 import UserIcon from '../../assets/icons/PurpleAvatar'
 import CopyIcon from '../../assets/icons/Copy'
 import { grayLightColor } from '../../components/common/variables';
+
+const { width, height} = Dimensions.get("screen")
 
 
 const BankTransferScreen = ({navigation}) => {
@@ -78,7 +80,9 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     padding: 14,
     alignItems: 'center',
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width: width,
+    height: height
    },
 
    transferDetailsContainer : {

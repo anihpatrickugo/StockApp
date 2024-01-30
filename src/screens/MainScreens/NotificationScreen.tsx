@@ -1,9 +1,12 @@
 import React from 'react'
-import { StyleSheet, StatusBar, SafeAreaView, View, Pressable, FlatList } from 'react-native'
+import { StyleSheet, StatusBar, SafeAreaView, View, Pressable, FlatList, Dimensions } from 'react-native'
 import * as UI from '../../components/common'
 import notifications from '../../constants/notifications';
 import NotificationIcon from '../../assets/icons/ColouredNotificationBell'
 import { grayLightColor } from '../../components/common/variables';
+
+
+const { width, height} = Dimensions.get("screen")
 
 const NotificationScreen = ({navigation}) => {
   return (
@@ -33,7 +36,9 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         padding: 14,
         alignItems: 'center',
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+        height: height,
+        width: width
     },
 
     notificationItem: {

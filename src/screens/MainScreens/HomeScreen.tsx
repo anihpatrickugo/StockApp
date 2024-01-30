@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity } from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity, Dimensions } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
 import {primaryColor} from '../../components/common/variables'
@@ -10,6 +10,9 @@ import BellOutline from '../../assets/icons/BellOutline';
 import recentTransactions from '../../constants/recentTransactions';
 import FundAlertModal from '../../components/main/FundAlert.Modal';
 import TransactionList from '../../components/main/TransactionList';
+
+
+const { width, height} = Dimensions.get("screen")
 
 
 const HomeScreen = ({navigation}) => {
@@ -96,6 +99,8 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         padding: 14,
         alignItems: 'center',
+        width: width,
+        height: height
     },
 
     topHeader: {

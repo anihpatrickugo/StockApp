@@ -1,12 +1,10 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Image, ScrollView, TouchableOpacity} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Image, ScrollView, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import {grayColor, grayLightColor, primaryColor, success } from '../../components/common/variables';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import recentTransactions from '../../constants/recentTransactions';
+import { success } from '../../components/common/variables';
 import Chart from '../../components/main/Chart';
 
-
+const { width, height} = Dimensions.get("screen")
 
 const AssetDetailScreen = ({navigation, route}) => {
     const [duration, setDuration] = React.useState("Day")
@@ -16,7 +14,7 @@ const AssetDetailScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.containner}>
       <UI.BackButton navigation={navigation} screenName='My assets'/>
 
-      <ScrollView style={{width: "100%", height: 500}} showsVerticalScrollIndicator={false}> 
+      <ScrollView style={{width: "100%", marginBottom: 30,}} showsVerticalScrollIndicator={false}> 
          
            <View style={{flexDirection: 'row', width: '100%',}}>
                 <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
@@ -79,7 +77,10 @@ const styles = StyleSheet.create({
   containner: {
     paddingTop: StatusBar.currentHeight,
     padding: 14,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width: width,
+    height: height,
+    
    },
 })
 

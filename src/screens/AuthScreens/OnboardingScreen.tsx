@@ -6,7 +6,7 @@ import onboardingData from '../../constants/onboardingData';
 import OnboardingListItem from '../../components/main/OnboardingListItem';
 import * as UI from '../../components/common/index';
 
-const { width } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 const ITEM_WIDTH = width;
 
 interface Props {
@@ -77,7 +77,9 @@ const OnboardingScreen:FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    width: width,
+    height: height
   },
 
   animationContainner: {

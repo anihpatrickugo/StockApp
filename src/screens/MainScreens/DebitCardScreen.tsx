@@ -1,10 +1,13 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Dimensions} from 'react-native'
 import { RadioButton } from 'react-native-paper'; 
 import * as UI from '../../components/common'
 import AccessIcon from '../../assets/icons/AccessBank'
 
 import { primaryColor } from '../../components/common/variables';
+
+
+const { width, height} = Dimensions.get("screen")
 
 
 const DebitCardScreen = ({navigation}) => {
@@ -73,7 +76,9 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     padding: 14,
     alignItems: 'center',
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width: width,
+    height: height
    },
 
    transferDetailsContainer : {

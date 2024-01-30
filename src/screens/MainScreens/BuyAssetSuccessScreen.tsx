@@ -4,7 +4,7 @@ import * as UI from '../../components/common/index';
 import Success from '../../assets/icons/Success';
 
 
-const {height} = Dimensions.get("screen")
+const {height, width} = Dimensions.get("screen")
 
 const BuyAssetSuccesScreen = ({navigation}) => {
 
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         padding: 14,
         alignItems: "center",
+        width: width,
         height: height
     },
 
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     buttonContainner: {
         width: '100%', 
         position: 'absolute', 
-        bottom: 20
+        bottom: 50
     }
 })
 export default BuyAssetSuccesScreen

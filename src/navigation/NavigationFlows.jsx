@@ -4,11 +4,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthFlow from "./AuthFlow";
 import MainFlow from "./MainFlows";
 
+import { useSelector, useDispatch } from "react-redux";
+
 const NavigationFlows = () => {
+  const auth = useSelector((state) => state.auth.value);
+  const dispatch = useDispatch();
+
   return (
     <NavigationContainer style={styles.container}>
-      {/* <AuthFlow /> */}
-      <MainFlow />
+      {auth ? <MainFlow /> : <AuthFlow />}
     </NavigationContainer>
   );
 };

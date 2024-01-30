@@ -1,15 +1,18 @@
 import React from 'react'
-import { KeyboardAvoidingView, View, StyleSheet, StatusBar, Image, ScrollView} from 'react-native'
+import {  View, StyleSheet, StatusBar, Image, ScrollView, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
 import { primaryColor } from '../../components/common/variables';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+
+const { width, height} = Dimensions.get("screen")
 
 
 const BuyAssetScreen = ({navigation, route}) => {
     const {item} = route.params
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.containner}>
+    <ScrollView  style={styles.containner}>
       <UI.BackButton navigation={navigation} screenName='Buy stocks'/>
 
       <ScrollView style={{width: "100%", height: 500}} showsVerticalScrollIndicator={false}> 
@@ -47,7 +50,7 @@ const BuyAssetScreen = ({navigation, route}) => {
         </View>
 
       </ScrollView>
-    </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 
@@ -56,7 +59,8 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     padding: 14,
     backgroundColor: "#FFFFFF",
-    width: "100%",
+    width: width,
+    height: height
    },
 })
 

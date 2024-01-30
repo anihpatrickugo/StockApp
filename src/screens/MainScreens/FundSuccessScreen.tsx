@@ -3,6 +3,8 @@ import { SafeAreaView, StyleSheet, StatusBar, View, Dimensions} from 'react-nati
 import * as UI from '../../components/common/index';
 import Success from '../../assets/icons/Success';
 
+const { width, height} = Dimensions.get("screen")
+
 
 const FundSuccesScreen = ({navigation}) => {
 
@@ -32,7 +34,8 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         padding: 14,
         alignItems: "center",
-        height: Dimensions.get('window').height
+        height: height,
+        width: width
     },
 
     message: {

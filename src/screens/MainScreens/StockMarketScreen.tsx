@@ -1,10 +1,10 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Image, FlatList, TouchableOpacity} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Image, FlatList, TouchableOpacity, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
 import {grayLightColor, success } from '../../components/common/variables';
 import recentTransactions from '../../constants/recentTransactions';
 
-
+const { width, height} = Dimensions.get("screen")
 
 const StockMarketScreen = ({navigation}) => {
 
@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     padding: 14,
     alignItems: 'center',
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width: width,
+    height: height
    },
 
    stockItem: {

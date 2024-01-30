@@ -1,11 +1,11 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Image, ScrollView, TouchableOpacity} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Image, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import {grayColor, grayLightColor, success } from '../../components/common/variables';
+import {grayColor, success } from '../../components/common/variables';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import recentTransactions from '../../constants/recentTransactions';
 
-
+const { width, height} = Dimensions.get("screen")
 
 const MyAssetsScreen = ({navigation}) => {
 
@@ -48,7 +48,9 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     padding: 14,
     alignItems: 'center',
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    height: height,
+    width: width
    },
 })
 

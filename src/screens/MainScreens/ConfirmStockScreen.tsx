@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height
    },
+   
    underlineStyleBase: {
     width: 45,
     height: 45,
