@@ -1,16 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions} from 'react-native'
+import { useMutation } from '@apollo/client';
 import { FontAwesome } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
 import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
 import GoogleIcon from '../../assets/icons/Google';
+import { SIGN_USER_UP } from '../../graphql/mutations/AuthMutations';
 
 
 const { width, height} = Dimensions.get("screen")
 
 
 const SignUpScreen = ({navigation}) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+
+  const [signUpUser, {data, loading, error}] = useMutation(SIGN_USER_UP)
+
+
+  const handleCreate = () => {
+    signUpUser({variables: {firstname, lastname, email, password},
+    onCompleted: (data) => {
+      if (data) {
+        navigation.replace('Verify')
+      }
+    }})
+    
+  }
+  if (loading) return <UI.Loading/>
+
+  if (error) console.log(error)
 
   return (
     <SafeAreaView style={styles.containner}>
@@ -30,6 +52,8 @@ const SignUpScreen = ({navigation}) => {
             placeholder="Firstname"
             keyboardType="default"
             editable={true}
+            value={firstname}
+            onChangeText={(text)=>setFirstname(text)}
             selectTextOnFocus={true} />
         </View>
         
@@ -39,6 +63,8 @@ const SignUpScreen = ({navigation}) => {
             placeholder="Lastname"
             keyboardType="default"
             editable={true}
+            value={lastname}
+            onChangeText={(text)=>setLastname(text)}
             selectTextOnFocus={true} />
         </View>
         
@@ -48,6 +74,8 @@ const SignUpScreen = ({navigation}) => {
             placeholder="Enter email-address"
             keyboardType="default"
             editable={true}
+            value={email}
+            onChangeText={(text)=>setEmail(text)}
             selectTextOnFocus={true} />
         </View>
 
@@ -58,11 +86,13 @@ const SignUpScreen = ({navigation}) => {
             keyboardType="default"
             secureTextEntry={true}
             editable={true}
+            value={password}
+            onChangeText={(text)=>setPassword(text)}
             selectTextOnFocus={true} />
         </View>
 
         <View style={styles.button}>
-            <UI.Button text='Create account' variant='coloured' onPress={()=>navigation.navigate('Verify')}/>
+            <UI.Button text='Create account' variant='coloured' onPress={handleCreate}/>
         </View>
 
         <UI.CustomText size='sm' bold style={{textAlign: 'center', marginVertical: 20}}>Or</UI.CustomText>

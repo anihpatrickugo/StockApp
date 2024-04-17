@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,19 +16,44 @@ import {
 } from "../../components/common/variables";
 import Logo from "../../assets/icons/Logo";
 import GoogleIcon from "../../assets/icons/Google";
-
+import { useMutation, gql } from "@apollo/client";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../../redux/slices/authSlice";
+import { SIGN_USER_IN } from "../../graphql/mutations/AuthMutations";
 
 const { width, height } = Dimensions.get("screen");
 
 const LoginScreen = ({ navigation }) => {
+  // login credentials
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // apollo mutation
+  const [signIn, { data, loading, error }] = useMutation(SIGN_USER_IN);
+
   const auth = useSelector((state) => state.auth.value);
   const dispatch = useDispatch();
 
   const handleLogin = () => {
-    dispatch(login());
+    signIn({
+      variables: { email: email, password: password },
+      onCompleted: (data) => {
+        console.log(data);
+        if (data.tokenAuth.token) {
+          dispatch(login(data.signIn));
+        }
+      },
+    });
   };
+
+  if (loading) {
+    return <UI.Loading />;
+    // return <UI.CustomText>Loading</UI.CustomText>;
+  }
+  if (error) {
+    // return <UI.Alert message={error} type="error" onClose={() => Void} />;
+    <UI.CustomText>{JSON.stringify(error.message)}</UI.CustomText>;
+  }
 
   return (
     <SafeAreaView style={styles.containner}>
@@ -49,6 +74,8 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Enter email-address"
             keyboardType="default"
             editable={true}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
             selectTextOnFocus={true}
           />
         </View>
@@ -60,6 +87,8 @@ const LoginScreen = ({ navigation }) => {
             keyboardType="default"
             secureTextEntry={true}
             editable={true}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
             selectTextOnFocus={true}
           />
         </View>

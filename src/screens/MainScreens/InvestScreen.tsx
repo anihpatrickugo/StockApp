@@ -6,6 +6,7 @@ import {grayColor, grayLightColor, primaryColor, success} from '../../components
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import recentTransactions from '../../constants/recentTransactions';
 import FundAlertModal from '../../components/main/FundAlert.Modal';
+import StockMarketList from '../../components/main/StockMarketList';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -97,38 +98,10 @@ const InvestScreen = ({navigation}) => {
         </View>
 
         {/* stock market */}
-        <View style={{ width: '100%', marginTop: 25,}}>
-             <View style={{ width: '100%', flexDirection: "row", justifyContent: "space-between",}}>
-                <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Stock markets</UI.CustomText>
-                <Pressable>
-                   <UI.CustomText size='sm' bold style={{paddingBottom: 6}} onPress={()=>navigation.navigate("Stock-Market")}>
-                    See all</UI.CustomText>
-                </Pressable>
-             </View>
+        <StockMarketList navigation={navigation}/>
 
-             <FlatList
-               overScrollMode='never'
-               data={recentTransactions}
-               keyExtractor={(item, index) => index.toString()}
-               style={{width: '100%', height: 290}}
-               renderItem={
-                ({item}) => (
-                    <TouchableOpacity style={styles.transactionItem}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
-                            <View style={{marginLeft: 6}}>
-                               <UI.CustomText size='sm'>{item.title}</UI.CustomText>
-                               <UI.CustomText size='xs'>APPL</UI.CustomText>
-                            </View>
-                        </View>
-
-                        <UI.CustomText size='sm' color={success}>^  284%</UI.CustomText>
-                    </TouchableOpacity>
-                )
-               }
-               showsVerticalScrollIndicator={false}
-             />
-        </View>
+        {/* actions */}
+        
 
     </SafeAreaView>
   )
@@ -175,15 +148,5 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
    
-
-    transactionItem: {
-        width: "100%",
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: grayLightColor,
-    
-    }
 })
 export default InvestScreen

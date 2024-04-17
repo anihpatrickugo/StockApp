@@ -4,6 +4,8 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 import * as UI from '../../components/common/index';
 import {darkGrayColor, grayLightColor, primaryColor} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
+import { useMutation } from '@apollo/client';
+import { VERIFY_USER } from '../../graphql/mutations/AuthMutations';
 
 
 const { width, height} = Dimensions.get("screen")
@@ -11,6 +13,21 @@ const { width, height} = Dimensions.get("screen")
 const VerifyScreen = ({navigation}) => {
 
     const [code, setCode] = React.useState("")
+
+      // apollo mutation
+     const [verifyUser, { data, loading, error }] = useMutation(VERIFY_USER);
+
+    const handleSendCode = () => {
+      verifyUser({
+        variables: { token: code },
+        onCompleted: (data) => {
+          // console.log(data);
+          if (data.verifyUser.success) {
+            navigation.navigate('AuthSuccess')
+          }
+        },
+      });
+    }
 
   return (
     <SafeAreaView style={styles.containner}>
@@ -30,7 +47,7 @@ const VerifyScreen = ({navigation}) => {
           autoFocusOnLoad={false}
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
-          onCodeFilled = {()=> navigation.replace("AuthSuccess")}
+          onCodeFilled = {handleSendCode}
 
 />
       </View>
