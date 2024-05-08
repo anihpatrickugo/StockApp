@@ -9,19 +9,9 @@ import {
 import * as UI from "../../components/common/index";
 import Success from "../../assets/icons/Success";
 
-import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "../../redux/slices/authSlice";
-
 const { width, height } = Dimensions.get("screen");
 
 const SuccesScreen = ({ navigation }) => {
-  const auth = useSelector((state) => state.auth.value);
-  const dispatch = useDispatch();
-
-  const handleSignup = () => {
-    dispatch(login());
-  };
-
   return (
     <SafeAreaView style={styles.containner}>
       <View style={styles.message}>
@@ -32,7 +22,11 @@ const SuccesScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainner}>
-        <UI.Button text="continue" variant="coloured" onPress={handleSignup} />
+        <UI.Button
+          text="Continue"
+          variant="coloured"
+          onPress={() => navigation.replace("LogIn")}
+        />
       </View>
     </SafeAreaView>
   );

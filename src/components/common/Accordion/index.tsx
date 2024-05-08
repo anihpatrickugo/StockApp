@@ -7,7 +7,7 @@ import USAIcon from '../../../assets/icons/USA'
 
 
 const Accordion = () => {
-    const [currency, setCurrency] = React.useState("Naira");
+    const [currency, setCurrency] = React.useState("Dollar");
     const [open, setOpen] = React.useState(false);
 
     // set currency and close list items
@@ -23,7 +23,7 @@ const Accordion = () => {
 
   return (
 
-   <Pressable style={styles.pickerContainer} onPress={()=>setOpen(!open)}>
+   <Pressable style={styles.pickerContainer}  >
     <View style={styles.currentItem}>
         {currency === "Naira" ? (
             <NigeriaIcon width={18} height={18}/>
@@ -32,12 +32,12 @@ const Accordion = () => {
         )}
 
         <Text style={{color: "#FFFFFF", fontWeight: '700', fontSize: 16}}>{currency === "Naira" ? 'NG Naira': 'US Dollar' }</Text>
-        { open ? (
+        {/* { open ? (
             <AntDesign name='up' size={24} color="#FFFFFF" />
             ): (
             <AntDesign name='down' size={24} color="#FFFFFF" />
             )
-        }
+        } */}
 
     </View>
 

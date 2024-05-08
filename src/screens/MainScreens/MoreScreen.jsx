@@ -8,7 +8,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as UI from "../../components/common";
 import {
   grayColor,
@@ -19,17 +21,30 @@ import AccountIcon from "../../assets/icons/Account";
 import CustomerCareIcon from "../../assets/icons/CustomerCare";
 import { AntDesign } from "@expo/vector-icons";
 
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { removeToken } from "../../redux/slices/authSlice";
 
 const { width, height } = Dimensions.get("screen");
 
 const MoreScreen = ({ navigation }) => {
-  const auth = useSelector((state) => state.auth.value);
+  const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      {
+        text: "Cancel",
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: "Logout",
+        onPress: async () => {
+          await AsyncStorage.removeItem("token");
+          dispatch(removeToken());
+        },
+      },
+    ]);
   };
 
   return (
@@ -53,7 +68,10 @@ const MoreScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         {/* link item */}
-        <TouchableOpacity style={styles.listItem}>
+        <TouchableOpacity
+          style={styles.listItem}
+          onPress={() => navigation.navigate("Profile")}
+        >
           <AccountIcon width={50} height={50} color="#E3E3E3" />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Dimensions} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Dimensions, ToastAndroid} from 'react-native'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import * as UI from '../../components/common/index';
 import {darkGrayColor, grayLightColor, primaryColor} from '../../components/common/variables'
@@ -23,14 +23,24 @@ const VerifyScreen = ({navigation}) => {
         onCompleted: (data) => {
           // console.log(data);
           if (data.verifyUser.success) {
-            navigation.navigate('AuthSuccess')
+            navigation.replace('AuthSuccess')
           }
+
         },
+        onError: (error) => {
+          ToastAndroid.showWithGravity(
+            error.message,
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );}
       });
     }
 
   return (
     <SafeAreaView style={styles.containner}>
+
+      {loading && <UI.Loading />}
+
       <Logo height={100} width={100}/>
 
       <UI.CustomText size='md' bold>Verify your account</UI.CustomText>

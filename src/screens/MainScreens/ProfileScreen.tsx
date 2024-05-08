@@ -1,51 +1,38 @@
 import React, {useState} from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions, ToastAndroid, KeyboardAvoidingView} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions, KeyboardAvoidingView} from 'react-native'
 import { useMutation } from '@apollo/client';
-import { FontAwesome } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
 import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
-import Logo from '../../assets/icons/Logo';
-import GoogleIcon from '../../assets/icons/Google';
-import { SIGN_USER_UP } from '../../graphql/mutations/AuthMutations';
+
 
 
 const { width, height} = Dimensions.get("screen")
 
 
-const SignUpScreen = ({navigation}) => {
+const ProfileScreen = ({navigation}) => {
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
 
-  const [signUpUser, {data, loading, error}] = useMutation(SIGN_USER_UP)
-
-
-  const handleCreate = () => {
-    signUpUser({variables: {firstname, lastname, email, password},
+  const handleEdit = () => {
+    // signUpUser({variables: {firstname, lastname, email, password},
     onCompleted: (data) => {
       if (data) {
         navigation.replace('Verify')
       }
-    },
-    onError: (error) => {
-      ToastAndroid.showWithGravity(
-        error.message,
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER
-      );
-    },
-  })
+    }}
     
-  }
- 
+  
+//   if (loading) return <UI.Loading/>
+
+//   if (error) console.log(error)
 
   return (
     <SafeAreaView style={styles.containner}>
-
-      {loading && <UI.Loading />}
       
-      <Logo height={100} width={100}/>
+    
 
       <UI.CustomText size='md' bold>Create account</UI.CustomText>
       <UI.CustomText size='xs'color={darkGrayColor} >Enter your details to continue</UI.CustomText>
@@ -100,21 +87,10 @@ const SignUpScreen = ({navigation}) => {
         </View>
 
         <View style={styles.button}>
-            <UI.Button text='Create account' variant='coloured' onPress={handleCreate}/>
+            <UI.Button text='Create account' variant='coloured' onPress={handleEdit}/>
         </View>
 
-        {/* <UI.CustomText size='sm' bold style={{textAlign: 'center', marginVertical: 20}}>Or</UI.CustomText> */}
-
-        {/* social auths */}
-        {/* <View style={styles.socialAuthContainner}>
-            <Pressable style={styles.socialAuth}>
-            <GoogleIcon height={25} width={25}/>
-            </Pressable>
-            <Pressable style={styles.socialAuth}>
-               <FontAwesome name="apple" size={24} color="black" />
-            </Pressable>
-        </View> */}
-   
+       
         <View style={styles.bottomText}>
           <UI.CustomText size='xs' color={darkGrayColor} >
               Have an account already? 
@@ -173,4 +149,4 @@ const styles = StyleSheet.create({
     }
 
 })
-export default SignUpScreen
+export default ProfileScreen

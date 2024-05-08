@@ -7,6 +7,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import recentTransactions from '../../constants/recentTransactions';
 import FundAlertModal from '../../components/main/FundAlert.Modal';
 import StockMarketList from '../../components/main/StockMarketList';
+import { useSelector } from 'react-redux';
+import MyAssetsList from '../../components/main/MyAssetsList';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -15,6 +17,8 @@ const InvestScreen = ({navigation}) => {
     const [showBalance, setShowBalance] = React.useState(true)
     
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const user = useSelector((state) => state.auth.user);
 
 
 
@@ -33,7 +37,7 @@ const InvestScreen = ({navigation}) => {
             <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
                 <View>
                    <UI.CustomText size='sm' color='#F6F6FE'>Portfolio Balance</UI.CustomText>
-                    <UI.CustomText size='xl' color='#F6F6FE' bold style={{marginVertical: 1}}>{!showBalance ? '₦780,000' : '*****'}</UI.CustomText>
+                    <UI.CustomText size='xl' color='#F6F6FE' bold style={{marginVertical: 1}}>{!showBalance ? `$ ${user.balance}` : '*****'}</UI.CustomText>
                 </View>
 
                 {/* acoordion */}
@@ -58,44 +62,7 @@ const InvestScreen = ({navigation}) => {
 
 
         {/* My assets */}
-        <View style={{ width: '100%', marginTop: 20,}}>
-             <View style={{ width: '100%', flexDirection: "row", justifyContent: "space-between",}}>
-                <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>My assets</UI.CustomText>
-                <Pressable onPress={()=>navigation.navigate("My-Assets")}>
-                   <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>See all</UI.CustomText>
-                </Pressable>
-             </View>
-
-             <FlatList
-               overScrollMode='never'
-               data={recentTransactions}
-               keyExtractor={(item, index) => index.toString()}
-               style={{width: '100%',}}
-               horizontal
-               showsHorizontalScrollIndicator={false}
-               renderItem={
-                ({item}) => (
-                    <TouchableOpacity 
-                    onPress={()=>navigation.navigate("Asset-Detail", {item})}
-                    style={{width: 130, borderWidth: 1, borderColor: grayColor, borderRadius: 15, marginRight:8, padding: 8,}}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 8}}>
-                            <Image source={{uri: item.image}} height={30} width={30} style={{borderRadius: 20}}/>
-                            <View style={{marginLeft: 6}}>
-                               <UI.CustomText size='xs'>{item.title}</UI.CustomText>
-                               <UI.CustomText size='xs'>APPL</UI.CustomText>
-                            </View>
-                        </View>
-
-                        <UI.CustomText size='xs' bold>#243,000</UI.CustomText>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:'baseline'}}>
-                             <UI.CustomText size='xs' color={success}>^  284%</UI.CustomText>
-                             <MaterialCommunityIcons name="greater-than" size={14} color={grayColor} />
-                        </View>
-                    </TouchableOpacity>
-                )
-               }
-             />
-        </View>
+        <MyAssetsList navigation={navigation}/>
 
         {/* stock market */}
         <StockMarketList navigation={navigation}/>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   StatusBar,
   View,
   Pressable,
+  ToastAndroid,
   Dimensions,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
@@ -18,8 +19,9 @@ import Logo from "../../assets/icons/Logo";
 import GoogleIcon from "../../assets/icons/Google";
 import { useMutation, gql } from "@apollo/client";
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "../../redux/slices/authSlice";
+import { setToken } from "../../redux/slices/authSlice";
 import { SIGN_USER_IN } from "../../graphql/mutations/AuthMutations";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -34,38 +36,39 @@ const LoginScreen = ({ navigation }) => {
   const auth = useSelector((state) => state.auth.value);
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     signIn({
       variables: { email: email, password: password },
       onCompleted: (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.tokenAuth.token) {
-          dispatch(login(data.signIn));
+          // setAuthToken();
+          dispatch(setToken(data.tokenAuth.token));
+          AsyncStorage.setItem("token", data.tokenAuth.token);
         }
+      },
+
+      onError: (error) => {
+        ToastAndroid.showWithGravity(
+          error.message,
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER
+        );
       },
     });
   };
 
-  if (loading) {
-    return <UI.Loading />;
-    // return <UI.CustomText>Loading</UI.CustomText>;
-  }
-  if (error) {
-    // return <UI.Alert message={error} type="error" onClose={() => Void} />;
-    <UI.CustomText>{JSON.stringify(error.message)}</UI.CustomText>;
-  }
-
   return (
     <SafeAreaView style={styles.containner}>
-      <Logo height={100} width={100} />
+      {loading && <UI.Loading />}
 
+      <Logo height={100} width={100} />
       <UI.CustomText size="md" bold>
         Welcome back!
       </UI.CustomText>
       <UI.CustomText size="xs" color={darkGrayColor}>
         Enter your details to continue
       </UI.CustomText>
-
       {/* form */}
       <View>
         {/* email */}

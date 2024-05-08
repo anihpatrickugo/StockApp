@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, View, StyleSheet, StatusBar, Pressable, Platform, ToastAndroid, Dimensions} from 'react-native'
 import * as Clipboard from 'expo-clipboard';
 import * as UI from '../../components/common'
-import WemaIcon from '../../assets/icons/WemaIcon'
+import TetherIcon from '../../assets/icons/Tether'
 import NumIcon from '../../assets/icons/123'
 import UserIcon from '../../assets/icons/PurpleAvatar'
 import CopyIcon from '../../assets/icons/Copy'
@@ -31,26 +31,26 @@ const BankTransferScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.containner}>
-      <UI.BackButton navigation={navigation} screenName='Bank Transfer'/>
+      <UI.BackButton navigation={navigation} screenName='Home'/>
       
       {/* Transfer Details */}
       <View style={[styles.transferDetailsContainer, {backgroundColor: copied && grayLightColor}]}>
         
         {/* row */}
-        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
-          <WemaIcon width={45} height={45}/>
+        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10, gap: 10}}>
           <View>
-            <UI.CustomText size='xs'>Bank Name</UI.CustomText>
-            <UI.CustomText size='md'>Wema Bank PLC</UI.CustomText>
+            <UI.CustomText size='xs'>Token Name</UI.CustomText>
+            <UI.CustomText size='md'>Tether USDT</UI.CustomText>
           </View>
+          <TetherIcon width={40} height={40}/>
         </View>
 
         {/* row */}
         <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
           <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
-              <NumIcon width={45} height={45}/>
+              {/* <NumIcon width={45} height={45}/> */}
               <View>
-                 <UI.CustomText size='xs'>Account number</UI.CustomText>
+                 <UI.CustomText size='xs'>Wallet Address</UI.CustomText>
                  <UI.CustomText size='md'>8004175407</UI.CustomText>
               </View>
           </View>
@@ -60,13 +60,13 @@ const BankTransferScreen = ({navigation}) => {
         </View>
 
         {/* row */}
-        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+        {/* <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
           <UserIcon width={45} height={45}/>
           <View>
             <UI.CustomText size='xs'>Account name</UI.CustomText>
             <UI.CustomText size='md'>Stock Payment</UI.CustomText>
           </View>
-        </View>
+        </View> */}
 
       </View>
 

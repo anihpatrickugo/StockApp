@@ -10,7 +10,7 @@ import { GET_ALL_STOCKS } from '../../graphql/queries/allstocks';
 
 const StockMarketList = ({navigation}) => {
     const {data, loading, error} = useQuery(GET_ALL_STOCKS)
-    console.log(data.allStocks)
+    // console.log(data)
 
   if (loading) return <UI.Loading/>
 
@@ -32,7 +32,7 @@ const StockMarketList = ({navigation}) => {
                style={{width: '100%', height: 290}}
                renderItem={
                 ({item}) => (
-                    <TouchableOpacity style={styles.transactionItem}>
+                    <TouchableOpacity style={styles.transactionItem}  onPress={()=>navigation.navigate("Asset-Detail", {item})}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                             <View style={{marginLeft: 6}}>

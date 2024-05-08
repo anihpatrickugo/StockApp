@@ -7,6 +7,10 @@ query {
     ticker
     image
     name 
+    open
+    prevClose
+    volume
+    marketCap
   }
 }
 

@@ -1,47 +1,70 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { useSharedValue, withTiming, useAnimatedStyle, Easing } from 'react-native-reanimated';
+import {Text, Modal, StyleSheet, View, Dimensions, ActivityIndicator} from 'react-native';
+const {width, height} = Dimensions.get("screen")
 
 const Loading = () => {
-    const progress = useSharedValue(0);
+ 
 
-    React.useEffect(() => {
-        progress.value = withTiming(1, {
-            duration: 1000,
-            easing: Easing.linear,
-        });
-    }, []);
+  return (
+    <>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={true}
+        >
+        <View style={styles.containner}>
 
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{ rotate: `${progress.value * 360}deg` }],
-        };
-    });
+          <View style={styles.modalView}>
+            <ActivityIndicator size="large" color="#E1AE3C" /> 
+            <Text style={styles.loadingText}>Loading...</Text>
 
-    // return (
-    //     <View style={styles.container}>
-    //         <View style={[styles.spinner, animatedStyle]} />
-    //     </View>
-    // );
-    return <View style={styles.container}>
-        <Text style={{fontSize: 24, fontWeight: "700"}}>Loading</Text>
+          </View>
+
         </View>
+      </Modal>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+  containner: {
+    position: 'absolute',
+    width: width,
+    height: height,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    width: 150,
+    height: 150,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 12,
+    borderRadius: 30,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    spinner: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        borderWidth: 2,
-        borderColor: 'gray',
-        borderTopColor: 'white',
-    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 20,
+  },
+
+  loadingText: {
+    fontSize: 14,
+    fontWeight: "700",
+    letterSpacing: 2,
+    marginTop: 16
+  }
 });
 
 export {Loading};
