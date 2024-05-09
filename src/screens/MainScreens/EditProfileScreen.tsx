@@ -1,32 +1,44 @@
 import React, {useState} from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions, ToastAndroid, KeyboardAvoidingView} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Image, Dimensions,KeyboardAvoidingView} from 'react-native'
 import { useMutation } from '@apollo/client';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
 import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
-import GoogleIcon from '../../assets/icons/Google';
-import { SIGN_USER_UP } from '../../graphql/mutations/AuthMutations';
+import { EDIT_USER } from '../../graphql/mutations/AuthMutations';
 import Toast from 'react-native-root-toast';
-
+import { useSelector } from 'react-redux';
 
 const { width, height} = Dimensions.get("screen")
 
 
-const SignUpScreen = ({navigation}) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
 
-  const [signUpUser, {data, loading, error}] = useMutation(SIGN_USER_UP)
+const EditProfileScreen = ({navigation}) => {
+    
+  const user = useSelector((state) => state.auth.user)
+    
+  const [firstname, setFirstname] = useState(user.firstName)
+  const [lastname, setLastname] = useState(user.lastName)
+  const [email, setEmail] = useState(user.email)
+  const [walletAddress, setWalletAddress] = useState(user.walletAddress)
+
+  const [editUser, {loading, error}] = useMutation(EDIT_USER)
 
 
   const handleCreate = () => {
-    signUpUser({variables: {firstname, lastname, email, password},
+    editUser({variables: {firstname, lastname, email, walletAddress},
     onCompleted: (data) => {
       if (data) {
-        navigation.replace('Verify')
+        navigation.navigate('Profile')
+        let toast = Toast.show('Successfully Edited Profile.', {
+            duration: Toast.durations.LONG,
+            visible: true,
+            position: 60,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            backgroundColor: 'green',
+          });
       }
     },
     // onError: (error) => {
@@ -59,15 +71,34 @@ const SignUpScreen = ({navigation}) => {
         </Toast>
       )}
       
-      <Logo height={100} width={100}/>
+   
 
-      <UI.CustomText size='md' bold>Create account</UI.CustomText>
+      <UI.CustomText size='md' bold>Edit Profile</UI.CustomText>
       <UI.CustomText size='xs'color={darkGrayColor} >Enter your details to continue</UI.CustomText>
 
-
+      
       {/* form */}
-      <KeyboardAvoidingView >
+      <KeyboardAvoidingView style={styles.form}>
         
+         {/* row */}
+         <View style={{alignSelf: 'center', marginVertical: 20,}}>
+            {user.profilePhoto ? (
+
+              <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: user.profilePhoto}}/>
+            ) : (
+              
+              <FontAwesome5 name="user-plus" size={50} color={primaryColor} />
+            )}
+
+            
+               {user.profilePhoto && <View style={{position: 'absolute', bottom: -5, right: -5}}>
+                   <FontAwesome5 name="plus" size={20} color="black" />
+               </View> } 
+            
+        
+         </View>
+
+
         {/* first name */}
         <View style={styles.textInput}>
           <UI.CustomTextInput 
@@ -104,38 +135,16 @@ const SignUpScreen = ({navigation}) => {
         {/* password */}
         <View style={styles.textInput}>
           <UI.CustomTextInput 
-            placeholder="Enter password"
+            placeholder="Enter USDT wallet address"
             keyboardType="default"
-            secureTextEntry={true}
             editable={true}
-            value={password}
-            onChangeText={(text)=>setPassword(text)}
+            value={walletAddress}
+            onChangeText={(text)=>setWalletAddress(text)}
             selectTextOnFocus={true} />
         </View>
 
         <View style={styles.button}>
-            <UI.Button text='Create account' variant='coloured' onPress={handleCreate}/>
-        </View>
-
-        {/* <UI.CustomText size='sm' bold style={{textAlign: 'center', marginVertical: 20}}>Or</UI.CustomText> */}
-
-        {/* social auths */}
-        {/* <View style={styles.socialAuthContainner}>
-            <Pressable style={styles.socialAuth}>
-            <GoogleIcon height={25} width={25}/>
-            </Pressable>
-            <Pressable style={styles.socialAuth}>
-               <FontAwesome name="apple" size={24} color="black" />
-            </Pressable>
-        </View> */}
-   
-        <View style={styles.bottomText}>
-          <UI.CustomText size='xs' color={darkGrayColor} >
-              Have an account already? 
-          </UI.CustomText>
-          <Pressable style={{marginLeft: 10}}  onPress={()=>navigation.navigate('LogIn')}>
-                 <UI.CustomText size='xs' color={primaryColor}>Log in</UI.CustomText>
-          </Pressable>
+            <UI.Button text='Save Profile' variant='coloured' onPress={handleCreate}/>
         </View>
         
       </KeyboardAvoidingView>
@@ -151,6 +160,12 @@ const styles = StyleSheet.create({
         width: width,
         height: height
     },
+
+    form: {
+        width: "100%",
+        flex: 1
+    },
+
 
     image: {
         width: 60,
@@ -187,4 +202,4 @@ const styles = StyleSheet.create({
     }
 
 })
-export default SignUpScreen
+export default EditProfileScreen

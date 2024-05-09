@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 // Create an HTTP link for the GraphQL endpoint
 const httpLink = createHttpLink({
@@ -46,7 +47,9 @@ export default function App() {
       <Provider store={store}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <StatusBar style="auto" translucent barStyle="light-content" />
-          <NavigationFlows />
+          <RootSiblingParent>
+            <NavigationFlows />
+          </RootSiblingParent>
         </GestureHandlerRootView>
       </Provider>
     </ApolloProvider>

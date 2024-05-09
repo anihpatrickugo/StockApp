@@ -76,7 +76,7 @@ const MoreScreen = ({ navigation }) => {
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>
             <UI.CustomText size="sm" bold>
-              Account settings
+              My Profile
             </UI.CustomText>
             <UI.CustomText size="xs">
               Personalize your account for a tailored investing environment

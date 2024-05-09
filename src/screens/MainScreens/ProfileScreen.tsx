@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions, KeyboardAvoidingView} from 'react-native'
-import { useMutation } from '@apollo/client';
+
+import { SafeAreaView, StyleSheet, StatusBar, View, Dimensions, Image} from 'react-native'
 import * as UI from '../../components/common/index';
-import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
+import { useSelector } from 'react-redux';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { primaryColor } from '../../components/common/variables';
+
 
 
 
@@ -10,97 +12,71 @@ const { width, height} = Dimensions.get("screen")
 
 
 const ProfileScreen = ({navigation}) => {
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
-
-  const handleEdit = () => {
-    // signUpUser({variables: {firstname, lastname, email, password},
-    onCompleted: (data) => {
-      if (data) {
-        navigation.replace('Verify')
-      }
-    }}
-    
-  
-//   if (loading) return <UI.Loading/>
-
-//   if (error) console.log(error)
+  const user = useSelector((state) => state.auth.user)
 
   return (
     <SafeAreaView style={styles.containner}>
       
     
 
-      <UI.CustomText size='md' bold>Create account</UI.CustomText>
-      <UI.CustomText size='xs'color={darkGrayColor} >Enter your details to continue</UI.CustomText>
+      <UI.CustomText size='md' bold>Account Details</UI.CustomText>
 
 
-      {/* form */}
-      <KeyboardAvoidingView >
+     {/* Transfer Details */}
+     <View style={styles.details}>
+
+         {/* row */}
+         <View style={{alignItems: 'center'}}>
+            {user?.profilePhoto ? (
+
+              <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: user.profilePhoto || null}}/>
+            ) : (
+              
+              <FontAwesome5 name="user-alt-slash" size={50} color={primaryColor} />
+            )}
+         </View>
         
-        {/* first name */}
-        <View style={styles.textInput}>
-          <UI.CustomTextInput 
-            placeholder="Firstname"
-            keyboardType="default"
-            editable={true}
-            value={firstname}
-            onChangeText={(text)=>setFirstname(text)}
-            selectTextOnFocus={true} />
-        </View>
-        
-        {/* last name */}
-        <View style={styles.textInput}>
-          <UI.CustomTextInput 
-            placeholder="Lastname"
-            keyboardType="default"
-            editable={true}
-            value={lastname}
-            onChangeText={(text)=>setLastname(text)}
-            selectTextOnFocus={true} />
-        </View>
-        
-        {/* email */}
-        <View style={styles.textInput}>
-          <UI.CustomTextInput 
-            placeholder="Enter email-address"
-            keyboardType="default"
-            editable={true}
-            value={email}
-            onChangeText={(text)=>setEmail(text)}
-            selectTextOnFocus={true} />
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10, gap: 10}}>
+          
+          <View>
+            <UI.CustomText size='xs'>First Name</UI.CustomText>
+            <UI.CustomText size='md'>{user?.firstName.toUpperCase()}</UI.CustomText>
+          </View>
         </View>
 
-        {/* password */}
-        <View style={styles.textInput}>
-          <UI.CustomTextInput 
-            placeholder="Enter password"
-            keyboardType="default"
-            secureTextEntry={true}
-            editable={true}
-            value={password}
-            onChangeText={(text)=>setPassword(text)}
-            selectTextOnFocus={true} />
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+          <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+              <View>
+                 <UI.CustomText size='xs'>Last Name</UI.CustomText>
+                 <UI.CustomText size='md'>{user?.lastName.toUpperCase()}</UI.CustomText>
+              </View>
+          </View>
         </View>
 
-        <View style={styles.button}>
-            <UI.Button text='Create account' variant='coloured' onPress={handleEdit}/>
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+          {/* <UserIcon width={45} height={45}/> */}
+          <View>
+            <UI.CustomText size='xs'>Email Address </UI.CustomText>
+            <UI.CustomText size='md'>{user?.email}</UI.CustomText>
+          </View>
         </View>
 
-       
-        <View style={styles.bottomText}>
-          <UI.CustomText size='xs' color={darkGrayColor} >
-              Have an account already? 
-          </UI.CustomText>
-          <Pressable style={{marginLeft: 10}}  onPress={()=>navigation.navigate('LogIn')}>
-                 <UI.CustomText size='xs' color={primaryColor}>Log in</UI.CustomText>
-          </Pressable>
+        {/* row */}
+        <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10}}>
+          {/* <UserIcon width={45} height={45}/> */}
+          <View>
+            <UI.CustomText size='xs'>Tether Wallet Address </UI.CustomText>
+            <UI.CustomText size='md'>{user?.walletAddress ? user.walletAddress : 'None'}</UI.CustomText>
+          </View>
         </View>
-        
-      </KeyboardAvoidingView>
+
+
+      </View>
+
+      <UI.Button text='Edit Profile' variant='coloured' onPress={()=>navigation.navigate("Edit-Profile")}/>
     </SafeAreaView>
   )
 }
@@ -111,42 +87,16 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         padding: 14,
         width: width,
-        height: height
+        height: height,
+        
     },
 
-    image: {
-        width: 60,
-        height: 40,
-        marginTop: 20,
-        marginBottom: 60
-    },
-
-    textInput: {
-        marginTop: 15
-    },
-
-    button: {
-        marginTop: 20
-    },
-
-    socialAuthContainner: {
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-
-    socialAuth: {
-        width: 50,
-        height: 50,
-        marginHorizontal: 15,
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: secondaryColor
-    }, 
-    bottomText: {
-      flexDirection: 'row',
-      marginVertical: 20
-    }
+    details: {
+      width: '100%',
+      marginVertical: 16,
+      flex: 1,
+      gap: 16
+     },
 
 })
 export default ProfileScreen

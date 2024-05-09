@@ -6,6 +6,7 @@ import {darkGrayColor, grayLightColor, primaryColor} from '../../components/comm
 import Logo from '../../assets/icons/Logo';
 import { useMutation } from '@apollo/client';
 import { VERIFY_USER } from '../../graphql/mutations/AuthMutations';
+import Toast from 'react-native-root-toast';
 
 
 const { width, height} = Dimensions.get("screen")
@@ -27,12 +28,12 @@ const VerifyScreen = ({navigation}) => {
           }
 
         },
-        onError: (error) => {
-          ToastAndroid.showWithGravity(
-            error.message,
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER
-          );}
+        // onError: (error) => {
+        //   ToastAndroid.showWithGravity(
+        //     error.message,
+        //     ToastAndroid.SHORT,
+        //     ToastAndroid.CENTER
+        //   );}
       });
     }
 
@@ -40,6 +41,19 @@ const VerifyScreen = ({navigation}) => {
     <SafeAreaView style={styles.containner}>
 
       {loading && <UI.Loading />}
+
+      {error && (
+        <Toast
+          visible={true}
+          position={60}
+          shadow={true}
+          animation={true}
+          hideOnPress={true}
+          backgroundColor="red"
+        >
+          {error.message}
+        </Toast>
+      )}
 
       <Logo height={100} width={100}/>
 

@@ -22,6 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../../redux/slices/authSlice";
 import { SIGN_USER_IN } from "../../graphql/mutations/AuthMutations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-root-toast";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -48,19 +49,32 @@ const LoginScreen = ({ navigation }) => {
         }
       },
 
-      onError: (error) => {
-        ToastAndroid.showWithGravity(
-          error.message,
-          ToastAndroid.SHORT,
-          ToastAndroid.CENTER
-        );
-      },
+      // onError: (error) => {
+      //   ToastAndroid.showWithGravity(
+      //     error.message,
+      //     ToastAndroid.SHORT,
+      //     ToastAndroid.CENTER
+      //   );
+      // },
     });
   };
 
   return (
     <SafeAreaView style={styles.containner}>
       {loading && <UI.Loading />}
+
+      {error && (
+        <Toast
+          visible={true}
+          position={60}
+          shadow={true}
+          animation={true}
+          hideOnPress={true}
+          backgroundColor="red"
+        >
+          {error.message}
+        </Toast>
+      )}
 
       <Logo height={100} width={100} />
       <UI.CustomText size="md" bold>

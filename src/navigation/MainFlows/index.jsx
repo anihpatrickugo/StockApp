@@ -9,6 +9,7 @@ import { GET_USER } from "../../graphql/queries/user";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/authSlice";
 import ProfileScreen from "../../screens/MainScreens/ProfileScreen";
+import EditProfileScreen from "../../screens/MainScreens/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,8 @@ const MainFlow = () => {
       <Stack.Screen name="Buy-Success" component={BuyAssetSuccesScreen} />
 
       <Stack.Screen name="Profile" component={ProfileScreen} />
+
+      <Stack.Screen name="Edit-Profile" component={EditProfileScreen} />
     </Stack.Navigator>
   );
 };

@@ -31,6 +31,28 @@ mutation SignUserUp ($firstname: String!, $lastname: String!, $email: String!, $
   }
 `
 
+
+export const EDIT_USER = gql`
+mutation EditUser($firstname: String!, $lastname: String!, $email: String!, $walletAddress: String!){
+  updateUser (firstName: $firstname, lastName: $lastname, email: $email, walletAddress: $walletAddress){
+   user {
+      id
+      profilePhoto
+      email
+      firstName
+      lastName
+      walletAddress
+      balance
+      lastLogin
+      isStaff
+      isActive
+      dateJoined
+    }
+  }
+}
+`
+
+
 export const VERIFY_USER = gql`
 mutation VerifyEmailToken ($token: String!) {
   verifyUser(token: $token) {
