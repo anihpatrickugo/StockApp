@@ -9,7 +9,7 @@ query {
         email
         balance
         walletAddress
-        profilePhoto
+        photo
       }
 }
 

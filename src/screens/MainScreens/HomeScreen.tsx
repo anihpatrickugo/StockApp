@@ -34,9 +34,9 @@ const HomeScreen = ({navigation}) => {
         {/* top bar header */}
         <View style={styles.topHeader}>
             <View style={styles.profileLink}>
-                {user?.profilePhoto ? (
+                {user?.photo ? (
                     
-                  <Image height={30} width={30} style={{borderRadius: 100}} source={{uri: user.profilePhoto || null}}/>
+                  <Image height={30} width={30} style={{borderRadius: 100}} source={{uri: user.photo || null}}/>
                 ) : (
                     <FontAwesome5 name="user-alt" size={24} color={primaryColor} />
 

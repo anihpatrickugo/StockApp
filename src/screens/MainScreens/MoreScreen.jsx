@@ -12,14 +12,12 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as UI from "../../components/common";
-import {
-  grayColor,
-  primaryColor,
-  secondaryColor,
-} from "../../components/common/variables";
+import { grayColor, primaryColor } from "../../components/common/variables";
 import AccountIcon from "../../assets/icons/Account";
 import CustomerCareIcon from "../../assets/icons/CustomerCare";
 import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../../redux/slices/authSlice";
@@ -88,11 +86,11 @@ const MoreScreen = ({ navigation }) => {
 
         {/* link item */}
         <TouchableOpacity style={styles.listItem}>
-          <AccountIcon width={50} height={50} color={secondaryColor} />
+          <MaterialIcons name="security" size={50} color="black" />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>
             <UI.CustomText size="sm" bold>
-              Security Settings
+              PIN Settings
             </UI.CustomText>
             <UI.CustomText size="xs">
               Ensure a worry-free investing experience with advanced security
@@ -122,64 +120,16 @@ const MoreScreen = ({ navigation }) => {
 
         {/* link item */}
         <TouchableOpacity style={styles.listItem}>
-          <Image
-            source={{
-              uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amazon_icon.svg/2048px-Amazon_icon.svg.png",
-            }}
-            width={48}
-            height={48}
-          />
+          <FontAwesome5 name="laptop-code" size={40} color="black" />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>
             <UI.CustomText size="sm" bold>
-              Referral Program
+              Developer Info
             </UI.CustomText>
             <UI.CustomText size="xs">
-              Refer friends, grow your community, and earn rewards through our
-              Referral Program.
+              Learn more about developer and see links to all their social
+              platforms.
             </UI.CustomText>
-          </View>
-
-          <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
-
-        {/* link item */}
-        <TouchableOpacity style={styles.listItem}>
-          <Image
-            source={{
-              uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amazon_icon.svg/2048px-Amazon_icon.svg.png",
-            }}
-            width={48}
-            height={48}
-          />
-
-          <View style={{ flex: 1, paddingHorizontal: 8 }}>
-            <UI.CustomText size="sm" bold>
-              Upgrade Account
-            </UI.CustomText>
-            <UI.CustomText size="xs">
-              Unlock premium features for an elevated investing experience.
-            </UI.CustomText>
-          </View>
-
-          <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
-
-        {/* link item */}
-        <TouchableOpacity style={styles.listItem}>
-          <Image
-            source={{
-              uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amazon_icon.svg/2048px-Amazon_icon.svg.png",
-            }}
-            width={48}
-            height={48}
-          />
-
-          <View style={{ flex: 1, paddingHorizontal: 8 }}>
-            <UI.CustomText size="sm" bold>
-              About MyStockPay
-            </UI.CustomText>
-            <UI.CustomText size="xs">About us.</UI.CustomText>
           </View>
 
           <AntDesign name="right" size={24} color={primaryColor} />
@@ -187,7 +137,7 @@ const MoreScreen = ({ navigation }) => {
 
         {/* link item */}
         <TouchableOpacity style={styles.listItem} onPress={handleLogout}>
-          <AccountIcon width={50} height={50} color="#E3E3E3" />
+          <AntDesign name="logout" size={50} color="black" />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>
             <UI.CustomText size="sm" bold>

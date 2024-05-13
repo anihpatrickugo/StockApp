@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Image, Dimensions,KeyboardAvoidingView} from 'react-native'
+import React, {useState, useEffect, useRef} from 'react'
+import { SafeAreaView, StyleSheet, StatusBar, Text, Button, View, Image, Dimensions,KeyboardAvoidingView, Pressable} from 'react-native'
 import { useMutation } from '@apollo/client';
 import { FontAwesome5 } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
@@ -7,7 +7,15 @@ import {darkGrayColor, primaryColor, secondaryColor} from '../../components/comm
 import Logo from '../../assets/icons/Logo';
 import { EDIT_USER } from '../../graphql/mutations/AuthMutations';
 import Toast from 'react-native-root-toast';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as ImagePicker from 'expo-image-picker'
+import { Camera } from 'expo-camera';
+import CameraModalView from '../../components/main/CameraModalView';
+import { setUser } from '../../redux/slices/authSlice';
+import { uploadToCloudinary } from '../../utils/uploadToCludinary';
+import { serializePhoto } from '../../utils/serializePhoto';
+import EditPhotoOptionsModalView from '../../components/main/EditPhotoOptionsModalView';
+
 
 const { width, height} = Dimensions.get("screen")
 
@@ -16,20 +24,40 @@ const { width, height} = Dimensions.get("screen")
 const EditProfileScreen = ({navigation}) => {
     
   const user = useSelector((state) => state.auth.user)
-    
+  const dispatch = useDispatch()
+
+  // camere permissions
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [camera, setCamera] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  
+  const [photo, setPhoto] = useState(user.photo);
   const [firstname, setFirstname] = useState(user.firstName)
   const [lastname, setLastname] = useState(user.lastName)
   const [email, setEmail] = useState(user.email)
   const [walletAddress, setWalletAddress] = useState(user.walletAddress)
 
+
+  const [modalVisible, setModalVisible] = useState(false)
+
+
+
+
   const [editUser, {loading, error}] = useMutation(EDIT_USER)
 
 
-  const handleCreate = () => {
-    editUser({variables: {firstname, lastname, email, walletAddress},
+
+  const handleEdit = async() => {
+
+    let newFile = serializePhoto(photo)
+    let imageFile = await uploadToCloudinary(newFile)
+   
+  
+    editUser({variables: {firstname, lastname, email, walletAddress, photo: imageFile},
     onCompleted: (data) => {
       if (data) {
         navigation.navigate('Profile')
+        
         let toast = Toast.show('Successfully Edited Profile.', {
             duration: Toast.durations.LONG,
             visible: true,
@@ -51,7 +79,53 @@ const EditProfileScreen = ({navigation}) => {
   })
     
   }
- 
+  
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true
+    });
+
+    if (!result.canceled) {
+      setPhoto(result.assets[0].uri);
+  
+    }
+  };
+
+
+  const toggleCamera = () => {
+    setType(
+      type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  }
+
+  const takePicture = async () => {
+    if(camera){
+        const data = await camera.takePictureAsync(null)
+        setPhoto(data.uri);
+        setCamera(false)
+    }else{
+      setCamera(true)
+    }
+  }
+ if (hasCameraPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+
+  useEffect(() => {
+    (async () => {
+      const cameraStatus = await Camera.requestCameraPermissionsAsync();
+      setHasCameraPermission(cameraStatus.status === 'granted');
+      })();
+  }, []);
 
   return (
     <SafeAreaView style={styles.containner}>
@@ -70,7 +144,20 @@ const EditProfileScreen = ({navigation}) => {
           {error.message}
         </Toast>
       )}
+
+      {/* modal for selecting the means of changing photo options */}
+      {modalVisible && (<EditPhotoOptionsModalView setModalVisible={setModalVisible} pickImage={pickImage} setCamera={setCamera}/>)}
       
+     {/* camera view */}
+     {camera && (
+         <CameraModalView
+            photo={photo} 
+            type={type} 
+            setCamera={setCamera} 
+            takePicture={takePicture} 
+            toggleCamera={toggleCamera}/>
+     )}
+    
    
 
       <UI.CustomText size='md' bold>Edit Profile</UI.CustomText>
@@ -81,22 +168,22 @@ const EditProfileScreen = ({navigation}) => {
       <KeyboardAvoidingView style={styles.form}>
         
          {/* row */}
-         <View style={{alignSelf: 'center', marginVertical: 20,}}>
-            {user.profilePhoto ? (
+         <Pressable style={{alignSelf: 'center', marginVertical: 20,}} onPress={()=>setModalVisible(true)}>
+            {photo || user.photo ? (
 
-              <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: user.profilePhoto}}/>
+              <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: photo || user.photo}}/>
             ) : (
               
               <FontAwesome5 name="user-plus" size={50} color={primaryColor} />
             )}
 
             
-               {user.profilePhoto && <View style={{position: 'absolute', bottom: -5, right: -5}}>
+            <View style={{position: 'absolute', bottom: -5, right: -5}}>
                    <FontAwesome5 name="plus" size={20} color="black" />
-               </View> } 
+            </View> 
             
         
-         </View>
+         </Pressable>
 
 
         {/* first name */}
@@ -144,7 +231,7 @@ const EditProfileScreen = ({navigation}) => {
         </View>
 
         <View style={styles.button}>
-            <UI.Button text='Save Profile' variant='coloured' onPress={handleCreate}/>
+            <UI.Button text='Save Profile' variant='coloured' onPress={handleEdit}/>
         </View>
         
       </KeyboardAvoidingView>
@@ -199,7 +286,8 @@ const styles = StyleSheet.create({
     bottomText: {
       flexDirection: 'row',
       marginVertical: 20
-    }
+    },
+  
 
 })
 export default EditProfileScreen

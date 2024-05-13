@@ -27,9 +27,9 @@ const ProfileScreen = ({navigation}) => {
 
          {/* row */}
          <View style={{alignItems: 'center'}}>
-            {user?.profilePhoto ? (
+            {user?.photo ? (
 
-              <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: user.profilePhoto || null}}/>
+              <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: user.photo || null}}/>
             ) : (
               
               <FontAwesome5 name="user-alt-slash" size={50} color={primaryColor} />

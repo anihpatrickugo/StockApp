@@ -16,7 +16,7 @@ mutation SignUserUp ($firstname: String!, $lastname: String!, $email: String!, $
     registerUser(firstName: $firstname, lastName: $lastname, email: $email, password: $password){
       user {
         id
-        profilePhoto
+        photo
         email
         firstName
         lastName
@@ -33,11 +33,11 @@ mutation SignUserUp ($firstname: String!, $lastname: String!, $email: String!, $
 
 
 export const EDIT_USER = gql`
-mutation EditUser($firstname: String!, $lastname: String!, $email: String!, $walletAddress: String!){
-  updateUser (firstName: $firstname, lastName: $lastname, email: $email, walletAddress: $walletAddress){
+mutation EditUser($firstname: String!, $lastname: String!, $email: String!, $walletAddress: String!, $photo: Upload!){
+  updateUser (firstName: $firstname, lastName: $lastname, email: $email, walletAddress: $walletAddress, photo: $photo){
    user {
       id
-      profilePhoto
+      photo
       email
       firstName
       lastName
