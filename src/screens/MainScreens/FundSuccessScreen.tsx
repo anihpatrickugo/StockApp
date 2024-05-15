@@ -14,7 +14,7 @@ const FundSuccesScreen = ({navigation}) => {
       <View style={styles.message}>
           <Success height={160} width={160} style={styles.icon}/>
           <UI.CustomText size='sm' bold style={styles.text}>
-           Account funded successfully
+           Deposit request was successfull. Please Wait for confirmation.
           </UI.CustomText>
       </View>
 
@@ -35,11 +35,13 @@ const styles = StyleSheet.create({
         padding: 14,
         alignItems: "center",
         height: height,
-        width: width
+        width: width,
+        flex: 1,
     },
 
     message: {
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1,
      },
 
     icon: {

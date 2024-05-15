@@ -11,6 +11,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import * as UI from "../../components/common/index";
 import {
+  danger,
   darkGrayColor,
   primaryColor,
   secondaryColor,
@@ -70,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
           shadow={true}
           animation={true}
           hideOnPress={true}
-          backgroundColor="red"
+          backgroundColor={danger}
         >
           {error.message}
         </Toast>

@@ -35,11 +35,13 @@ const styles = StyleSheet.create({
         padding: 14,
         alignItems: "center",
         width: width,
-        height: height
+        height: height,
+        flex: 1,
     },
 
     message: {
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1,
      },
 
     icon: {
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     buttonContainner: {
         width: '100%', 
         position: 'absolute', 
-        bottom: 50
+        bottom: 20
     }
 })
 export default BuyAssetSuccesScreen

@@ -11,6 +11,8 @@ import recentTransactions from '../../constants/recentTransactions';
 import { FontAwesome5 } from '@expo/vector-icons';
 import TransactionList from '../../components/main/TransactionList';
 import { useSelector } from 'react-redux';
+import { useQuery } from '@apollo/client';
+import { GET_TRANSACTIONS } from '../../graphql/queries/transanctions';
 
 
 
@@ -24,12 +26,16 @@ const HomeScreen = ({navigation}) => {
 
     const user = useSelector((state) => state.auth.user)
 
+    const {data, loading} = useQuery(GET_TRANSACTIONS)
+
 
 
   return (
     <SafeAreaView style={[styles.containner, {backgroundColor: modalVisible ? "gray" : "#FFFFFF"}]}>
        
        {/* {modalVisible && (<FundAlertModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation}/>)} */}
+
+       
 
         {/* top bar header */}
         <View style={styles.topHeader}>
@@ -71,7 +77,7 @@ const HomeScreen = ({navigation}) => {
 
         {/* actions */}
         <View style={styles.actions}>
-            <TouchableOpacity style={styles.actionItems} onPress={()=>navigation.navigate("Bank-Transfer-Fund")}>
+            <TouchableOpacity style={styles.actionItems} onPress={()=>navigation.navigate("USDT-Transfer-Fund")}>
                 <Fund height={65} width={65}/>
                 <UI.CustomText size='sm'>Fund</UI.CustomText>
             </TouchableOpacity>
@@ -91,11 +97,24 @@ const HomeScreen = ({navigation}) => {
 
         {/* recent transanctions */}
         <View style={{ width: '100%', marginTop: 45,}}>
-            <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Recent Transanctions</UI.CustomText>
+            <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Recent Actions</UI.CustomText>
+
+            {loading && <UI.CustomText 
+                size='md' 
+                bold  color={primaryColor}
+               style={{textAlign: "center", marginVertical: 60}}>Getting Recent Transactions...</UI.CustomText>
+            }
+
+            {data?.recentTransactions.length === 0 && <UI.CustomText 
+                size='md' 
+                bold
+               style={{textAlign: "center", marginVertical: 60}}>No Recent Transaction</UI.CustomText>
+            }
+            
+            
             <TransactionList
             modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-            recentTransactions={recentTransactions}
+            recentTransactions={data?.recentTransactions}
             />         
         </View>
 

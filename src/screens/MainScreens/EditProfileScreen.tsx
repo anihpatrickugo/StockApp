@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, StatusBar, Text, Button, View, Image, Dimensi
 import { useMutation } from '@apollo/client';
 import { FontAwesome5 } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
-import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
+import {danger, darkGrayColor, primaryColor, secondaryColor, success} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
 import { EDIT_USER } from '../../graphql/mutations/AuthMutations';
 import Toast from 'react-native-root-toast';
@@ -65,7 +65,7 @@ const EditProfileScreen = ({navigation}) => {
             shadow: true,
             animation: true,
             hideOnPress: true,
-            backgroundColor: 'green',
+            backgroundColor: success,
           });
       }
     },
@@ -139,7 +139,7 @@ const EditProfileScreen = ({navigation}) => {
           shadow={true}
           animation={true}
           hideOnPress={true}
-          backgroundColor="red"
+          backgroundColor={danger}
         >
           {error.message}
         </Toast>
@@ -168,7 +168,7 @@ const EditProfileScreen = ({navigation}) => {
       <KeyboardAvoidingView style={styles.form}>
         
          {/* row */}
-         <Pressable style={{alignSelf: 'center', marginVertical: 20,}} onPress={()=>setModalVisible(true)}>
+         <Pressable style={{alignSelf: 'center', marginVertical: 20}} onPress={()=>setModalVisible(true)}>
             {photo || user.photo ? (
 
               <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: photo || user.photo}}/>

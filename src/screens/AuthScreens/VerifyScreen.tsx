@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, StatusBar, View, Dimensions, ToastAndroid} from 'react-native'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import * as UI from '../../components/common/index';
-import {darkGrayColor, grayLightColor, primaryColor} from '../../components/common/variables'
+import {danger, darkGrayColor, grayLightColor, primaryColor} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
 import { useMutation } from '@apollo/client';
 import { VERIFY_USER } from '../../graphql/mutations/AuthMutations';
@@ -49,7 +49,7 @@ const VerifyScreen = ({navigation}) => {
           shadow={true}
           animation={true}
           hideOnPress={true}
-          backgroundColor="red"
+          backgroundColor={danger}
         >
           {error.message}
         </Toast>

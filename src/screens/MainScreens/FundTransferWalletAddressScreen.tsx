@@ -6,7 +6,7 @@ import TetherIcon from '../../assets/icons/Tether'
 import NumIcon from '../../assets/icons/123'
 import UserIcon from '../../assets/icons/PurpleAvatar'
 import CopyIcon from '../../assets/icons/Copy'
-import { grayLightColor } from '../../components/common/variables';
+import { grayLightColor, success } from '../../components/common/variables';
 import QRCode from 'react-native-qrcode-svg';
 
 const { width, height} = Dimensions.get("screen")
@@ -14,7 +14,7 @@ const { width, height} = Dimensions.get("screen")
 const WALLET_ADDRESS = "TSAfYQqKuqSVqqnS7NEjamAauAZUGdaUrr"
 
 
-const BankTransferScreen = ({navigation}) => {
+const FundTransferWalletAddressScreen = ({navigation}) => {
 
   const [copied, setCopied] = React.useState(false)
 
@@ -36,7 +36,7 @@ const BankTransferScreen = ({navigation}) => {
     <SafeAreaView style={styles.containner}>
       <UI.BackButton navigation={navigation} screenName='Home'/>
 
-        <UI.CustomText size='xs' bold color='green'>Send the the desired amout to this wallet address below.</UI.CustomText>
+        <UI.CustomText size='xs' bold color={success} style={{textAlign: "center"}}>Send the the desired amout (must be above $100) to this wallet address below.</UI.CustomText>
       
       {/* Transfer Details */}
       <View style={[styles.transferDetailsContainer, {backgroundColor: copied && grayLightColor, marginTop: 32}]}>
@@ -88,7 +88,7 @@ const BankTransferScreen = ({navigation}) => {
 
       </View>
 
-      <UI.Button text='I’ve made the transfer' variant='coloured'/>
+      <UI.Button text='I’ve made the transfer' variant='coloured' onPress={()=>navigation.navigate("Deposit-Details")}/>
     </SafeAreaView>
   )
 }
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
    },
 })
 
-export default BankTransferScreen
+export default FundTransferWalletAddressScreen

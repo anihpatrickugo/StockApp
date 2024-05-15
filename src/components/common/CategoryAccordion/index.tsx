@@ -4,24 +4,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { darkGrayColor, primaryColor, secondaryColor } from '../variables';
 
 
-const CategoryAccordion = () => {
-    const [category, setCategory] = React.useState("All");
+const CategoryAccordion = ({category, setCategory}) => {
+
     const [open, setOpen] = React.useState(false);
 
-    // set currency and close list items
-    const setTheCategory = (value)=> {
 
-        if (value === 'All'){
-            setCategory('All')
-        }
-        if (value == 'Deposits'){
-           setCategory('Deposits')
-        }
-        else{
-            setCategory('Withdrawal')
-        }
-        setOpen(false)
-    }
 
   return (
 
@@ -38,16 +25,26 @@ const CategoryAccordion = () => {
 
     </View>
 
-    <View style={{display: open ? 'flex' : 'none', width: '100%', backgroundColor: secondaryColor, borderRadius: 20, paddingHorizontal: 8}}>
-        <Pressable style={styles.listItem}  onPress={()=>setTheCategory('All')}>
+    <View style={[{display: open ? 'flex' : 'none'}, styles.allCategories]}>
+        <Pressable style={styles.listItem}  onPress={()=>
+        {setCategory('All');
+            setOpen(false)
+        }}>
              <Text style={{color: primaryColor, fontWeight: '700', fontSize: 14}}>All</Text>
         </Pressable>
 
-        <Pressable style={styles.listItem} onPress={()=>setTheCategory('Deposits')}>
+        <Pressable style={styles.listItem} onPress={()=>{
+            setCategory('Deposit');
+            setOpen(false)
+
+        }}>
              <Text style={{color: primaryColor, fontWeight: '700', fontSize: 14}}>Deposits</Text>
         </Pressable>
 
-        <Pressable style={styles.listItem} onPress={()=>setTheCategory('Withdrawal')}>
+        <Pressable style={styles.listItem} onPress={()=>{
+            setCategory('Withdrawal');
+            setOpen(false)
+            }}>
              <Text style={{color: primaryColor, fontWeight: '700', fontSize: 14}}>Withdrawal</Text>
         </Pressable>
 
@@ -61,13 +58,18 @@ const CategoryAccordion = () => {
 const styles = StyleSheet.create({
     pickerContainer: {
         width: "40%",
-        height: 31,
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         borderWidth: 1,
         borderColor: 'white',
-        borderRadius: 120,
-        position: "relative", 
-        zIndex: 100
+        borderRadius: 20,
+      },
+
+      allCategories: {
+        width: '100%', 
+        backgroundColor: secondaryColor, 
+        borderRadius: 20, 
+        paddingHorizontal: 8,
+  
       },
 
       currentItem: {
@@ -81,7 +83,8 @@ const styles = StyleSheet.create({
         width: '100%', 
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 4
+        marginVertical: 4,
+        paddingVertical: 10,
         }
 })
 

@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/authSlice";
 import ProfileScreen from "../../screens/MainScreens/ProfileScreen";
 import EditProfileScreen from "../../screens/MainScreens/EditProfileScreen";
+import DeveloperScreen from "../../screens/MainScreens/DeveloperInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,8 +30,6 @@ const MainFlow = () => {
     >
       <Stack.Screen name="Home-Index" component={TabFlows} />
 
-      <Stack.Screen name="Fund-Success" component={FundSuccesScreen} />
-
       <Stack.Screen name="Buy-Asset" component={BuyAssetScreen} />
 
       <Stack.Screen name="Confirm-Buy" component={ConfirmStockScreen} />
@@ -40,6 +39,8 @@ const MainFlow = () => {
       <Stack.Screen name="Profile" component={ProfileScreen} />
 
       <Stack.Screen name="Edit-Profile" component={EditProfileScreen} />
+
+      <Stack.Screen name="Developer" component={DeveloperScreen} />
     </Stack.Navigator>
   );
 };

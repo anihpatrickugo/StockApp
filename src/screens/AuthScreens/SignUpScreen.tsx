@@ -1,11 +1,9 @@
 import React, {useState} from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions, ToastAndroid, KeyboardAvoidingView} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, View, Pressable, Dimensions, KeyboardAvoidingView} from 'react-native'
 import { useMutation } from '@apollo/client';
-import { FontAwesome } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
-import {darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
+import {danger, darkGrayColor, primaryColor, secondaryColor} from '../../components/common/variables'
 import Logo from '../../assets/icons/Logo';
-import GoogleIcon from '../../assets/icons/Google';
 import { SIGN_USER_UP } from '../../graphql/mutations/AuthMutations';
 import Toast from 'react-native-root-toast';
 
@@ -53,7 +51,7 @@ const SignUpScreen = ({navigation}) => {
           shadow={true}
           animation={true}
           hideOnPress={true}
-          backgroundColor="red"
+          backgroundColor={danger}
         >
           {error.message}
         </Toast>
