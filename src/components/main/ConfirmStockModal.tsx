@@ -5,10 +5,14 @@ import * as UI from '../common'
 import { primaryColor, grayLightColor, darkGrayColor } from '../common/variables';
 
 
+
+
 const {width} = Dimensions.get("screen")
 
-const ConfirmStockModal = ({modalVisible, setModalVisible, navigation}) => {
-  const [code, setCode] = React.useState("");
+const ConfirmStockModal = ({modalVisible, setModalVisible,  handlePosition}) => {
+
+  const [pin, setPin] = React.useState("");
+  
 
   return (
     <>
@@ -30,17 +34,14 @@ const ConfirmStockModal = ({modalVisible, setModalVisible, navigation}) => {
             <OTPInputView
                   style={{width: '60%', height: 100, alignItems: "center"}}
                   pinCount={4}
-                  code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-                  onCodeChanged = {code => {setCode(code)}}
+                  code={pin} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+                  onCodeChanged = {code => {setPin(code)}}
                   autoFocusOnLoad={false}
                   codeInputFieldStyle={styles.underlineStyleBase}
                   codeInputHighlightStyle={styles.underlineStyleHighLighted}
-                  onCodeFilled = {()=> navigation.replace("Buy-Success")}
-            />
+                  onCodeFilled = {(code)=>handlePosition(code)}
 
-            <Pressable>
-                <UI.CustomText size="sm" color={primaryColor}>Forgot password ?</UI.CustomText>
-            </Pressable>
+            />
 
           </View>
         </View>

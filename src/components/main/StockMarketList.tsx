@@ -2,9 +2,9 @@ import React from 'react'
 import { View, FlatList, Image, TouchableOpacity, Pressable, StyleSheet } from 'react-native'
 import * as UI from '../common/index';
 import { grayLightColor, success } from '../common/variables';
-import recentTransactions from '../../constants/recentTransactions';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_STOCKS } from '../../graphql/queries/allstocks';
+import StockItem from './StockItem';
 
 
 
@@ -32,17 +32,7 @@ const StockMarketList = ({navigation}) => {
                style={{width: '100%', height: 290}}
                renderItem={
                 ({item}) => (
-                    <TouchableOpacity style={styles.transactionItem}  onPress={()=>navigation.navigate("Asset-Detail", {item})}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
-                            <View style={{marginLeft: 6}}>
-                               <UI.CustomText size='sm'>{item.name}</UI.CustomText>
-                               <UI.CustomText size='xs'>APPL</UI.CustomText>
-                            </View>
-                        </View>
-
-                        <UI.CustomText size='sm' color={success}>^  284%</UI.CustomText>
-                    </TouchableOpacity>
+                    <StockItem item={item} navigation={navigation}/>
                 )
                }
                showsVerticalScrollIndicator={false}
@@ -50,17 +40,5 @@ const StockMarketList = ({navigation}) => {
         </View>
   )
 }
-
-const styles = StyleSheet.create({
-    transactionItem: {
-        width: "100%",
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: grayLightColor,
-    
-    }
-})
 
 export default StockMarketList

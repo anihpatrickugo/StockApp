@@ -4,7 +4,7 @@ import NotificationScreen from "../../../screens/MainScreens/NotificationScreen"
 import FundTransferWalletAddressScreen from "../../../screens/MainScreens/FundTransferWalletAddressScreen";
 import FundSuccesScreen from "../../../screens/MainScreens/FundSuccessScreen";
 import DepositDetailsScreen from "../../../screens/MainScreens/DepositDetailsScreen";
-import NewCardScreen from "../../../screens/MainScreens/NewCardScreen";
+import WithdrawalScreen from "../../../screens/MainScreens/WithdrawalScreen";
 const Stack = createNativeStackNavigator();
 
 const HomeFlows = () => {
@@ -27,7 +27,7 @@ const HomeFlows = () => {
 
       <Stack.Screen name="Deposit-Details" component={DepositDetailsScreen} />
 
-      <Stack.Screen name="New-Card" component={NewCardScreen} />
+      <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
     </Stack.Navigator>
   );
 };

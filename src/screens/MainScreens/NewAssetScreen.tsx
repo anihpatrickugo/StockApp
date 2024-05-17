@@ -2,18 +2,19 @@ import React from 'react'
 import {  View, StyleSheet, StatusBar, Image, ScrollView, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
 import { primaryColor } from '../../components/common/variables';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 
 const { width, height} = Dimensions.get("screen")
 
 
-const BuyAssetScreen = ({navigation, route}) => {
-    const {item} = route.params
+const NewAssetScreen = ({navigation, route}) => {
+    const {item, direction} = route.params
+    const [amount, setAmount] = React.useState("")
 
   return (
     <ScrollView  style={styles.containner}>
-      <UI.BackButton navigation={navigation} screenName='Buy stocks'/>
+      <UI.BackButton navigation={navigation} screenName={`${direction} ${item.ticker}`}/>
 
       <ScrollView style={{width: "100%", height: 500}} showsVerticalScrollIndicator={false}> 
           
@@ -21,31 +22,38 @@ const BuyAssetScreen = ({navigation, route}) => {
             <View style={{flexDirection: 'row'}}>
                 <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                 <View style={{marginLeft: 12}}>
-                   <UI.CustomText size='sm' bold>{item.title}</UI.CustomText>
-                   <UI.CustomText size='xs'>APPL</UI.CustomText>
+                   <UI.CustomText size='sm' bold>{item.name}</UI.CustomText>
+                   <UI.CustomText size='xs'>{item.ticker}</UI.CustomText>
                 </View>
             </View>
 
            <View>
-                 <UI.CustomText size='md' bold>$54</UI.CustomText>
+                 <UI.CustomText size='md' bold>{`$ ${item.price}`}</UI.CustomText>
                  <UI.CustomText size='sm' >Market price</UI.CustomText>
           </View>
+
         </View>
 
         {/* form */}
         <View style={{marginTop: 40, }}>
-            <View>
-                 <UI.CustomText size='sm' style={{marginBottom: 8}}>Enter amount</UI.CustomText>
-                 <UI.FormInput keyboardType='numeric' style={{ fontSize:24, marginBottom: 40, minHeight:70, borderColor: primaryColor, borderWidth: 1.5, borderRadius: 20}}/>
-            </View>
 
             <View>
                  <UI.CustomText size='sm' style={{marginBottom: 8}}>Number of stocks</UI.CustomText>
-                 <UI.FormInput keyboardType='numeric' style={{ fontSize:24, marginBottom: 40, minHeight:70, borderColor: primaryColor, borderWidth: 1.5, borderRadius: 20}}/>
+                 <UI.FormInput 
+                 keyboardType='numeric' 
+                 style={styles.formInput}
+                 value={amount}
+                 onChangeText={(value)=>setAmount(value)}
+                 />
+            </View>
+
+            <View style={{marginTop: 20, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+              <UI.CustomText size='md' bold style={{marginBottom: 8}}>Total: </UI.CustomText>
+              <UI.CustomText size='md' bold>{`$ ${Number(amount) * item.price}`}</UI.CustomText>
             </View>
             
             <View style={{marginVertical: 16}}>
-               <UI.Button text='Continue' variant='coloured' onPress={()=>navigation.navigate("Confirm-Buy", {item})}/>
+               <UI.Button text='Continue' variant='coloured' onPress={()=>navigation.navigate("Confirm-Stock", {item, direction, amount})}/>
             </View>
         </View>
 
@@ -62,7 +70,16 @@ const styles = StyleSheet.create({
     width: width,
     height: height
    },
+
+   formInput: { 
+     fontSize:24, 
+     marginBottom: 40,
+     minHeight:70, 
+     borderColor: primaryColor, 
+     borderWidth: 1.5, 
+     borderRadius: 20
+     }
 })
 
-export default  BuyAssetScreen
+export default  NewAssetScreen
 

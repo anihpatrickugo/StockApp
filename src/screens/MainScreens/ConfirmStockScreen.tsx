@@ -1,29 +1,70 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, StatusBar, Image, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import { grayLightColor, primaryColor, darkGrayColor} from '../../components/common/variables';
+import { grayLightColor, primaryColor, darkGrayColor, danger} from '../../components/common/variables';
 import ConfirmStockModal from '../../components/main/ConfirmStockModal';
+import { useMutation } from '@apollo/client';
+import { NEW_POSITION } from '../../graphql/mutations/TransactionsMutations';
+import Toast from 'react-native-root-toast';
 
 
 const {width, height} = Dimensions.get("screen")
 
 const ConfirmStockScreen = ({navigation, route}) => {
 
+ 
   const [modalVisible, setModalVisible] = React.useState(false);
-  const {item} = route.params
+  const {item, amount, direction} = route.params
+  
+  const [newPosition, {loading, error}] = useMutation(NEW_POSITION)
+
+  const handlePosition = async(pin: string)=>{
+
+    newPosition({variables: {direction, ticker: item.ticker, volume: parseInt(amount), pin: parseInt(pin)},
+      onCompleted: (data) => {
+        if (data) {
+          navigation.replace('Buy-Success')
+        }
+      },
+    })
+
+  }
+
 
   return (
     <SafeAreaView style={[styles.containner, { backgroundColor: modalVisible ? "gray" : "#FFFFFF"}]}>
+         
+         {loading && <UI.Loading />}
 
-          {modalVisible && (<ConfirmStockModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation}/>)}
+         {error && (
+            <Toast
+              visible={true}
+              position={60}
+              shadow={true}
+              animation={true}
+              hideOnPress={true}
+              backgroundColor={danger}
+            >
+               {error.message}
+            </Toast>
+          )}
 
-           <UI.BackButton navigation={navigation} screenName='Buy stocks'/>
+
+         
+          {/* modal for the user pin  */}
+          {modalVisible && (<ConfirmStockModal
+           modalVisible={modalVisible} 
+           setModalVisible={setModalVisible} 
+           handlePosition={handlePosition}
+           />)}
+
+           <UI.BackButton navigation={navigation} screenName={`Confirm ${direction} ${item.ticker}`}/>
 
 
           <View style={{flexDirection: 'row'}}>
                 <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                 <View style={{marginLeft: 12}}>
-                   <UI.CustomText size='sm' bold>{item.title}</UI.CustomText>
+                   <UI.CustomText size='sm' bold>{item.name}</UI.CustomText>
                    <UI.CustomText size='xs'>APPL</UI.CustomText>
                 </View>
          </View>
@@ -31,28 +72,29 @@ const ConfirmStockScreen = ({navigation, route}) => {
          {/* item details */}
          <View style={{marginVertical: 12, padding: 14, width: "100%", backgroundColor: modalVisible ? "gray" :  "#F8F8FA", gap: 16}}>
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
-                <UI.CustomText size='sm'>Amount:</UI.CustomText>
-                <UI.CustomText size='sm'>₦8,500</UI.CustomText>
-            </View>
-            
-            <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
-                <UI.CustomText size='sm'>Market Price:</UI.CustomText>
-                <UI.CustomText size='sm'>₦188,500</UI.CustomText>
+                <UI.CustomText size='sm'>Position:</UI.CustomText>
+                <UI.CustomText size='sm'>{direction}</UI.CustomText>
             </View>
 
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
+                <UI.CustomText size='sm'>Price:</UI.CustomText>
+                <UI.CustomText size='sm'>{`$${item.price}`}</UI.CustomText>
+            </View>
+            
+
+            <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
                 <UI.CustomText size='sm'>No of stocks:</UI.CustomText>
-                <UI.CustomText size='sm'>3.48</UI.CustomText>
+                <UI.CustomText size='sm'>{amount ? amount : 0}</UI.CustomText>
             </View>
 
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
                 <UI.CustomText size='sm'>Trading fee:</UI.CustomText>
-                <UI.CustomText size='sm'>₦500</UI.CustomText>
+                <UI.CustomText size='sm'>$0</UI.CustomText>
             </View>
 
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
                 <UI.CustomText size='md' bold>Total:</UI.CustomText>
-                <UI.CustomText size='md' bold>₦196,500</UI.CustomText>
+                <UI.CustomText size='md' bold>{`$${item.price * amount}`}</UI.CustomText>
             </View>
 
          </View>

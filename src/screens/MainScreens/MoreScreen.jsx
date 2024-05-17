@@ -85,7 +85,10 @@ const MoreScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         {/* link item */}
-        <TouchableOpacity style={styles.listItem}>
+        <TouchableOpacity
+          style={styles.listItem}
+          onPress={() => navigation.navigate("Set-Pin")}
+        >
           <MaterialIcons name="security" size={50} color="black" />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>

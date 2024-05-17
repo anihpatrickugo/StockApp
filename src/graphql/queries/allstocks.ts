@@ -9,7 +9,7 @@ query {
     name 
     open
     prevClose
-    volume
+    price
     marketCap
   }
 }

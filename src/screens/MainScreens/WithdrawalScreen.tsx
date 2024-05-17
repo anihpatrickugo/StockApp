@@ -4,30 +4,27 @@ import * as UI from '../../components/common'
 import { danger, success } from '../../components/common/variables';
 const { width, height} = Dimensions.get("screen")
 import { useMutation } from '@apollo/client';
-import { NEW_DEPOSIT } from '../../graphql/mutations/TransactionsMutations';
+import { NEW_WITHDRAWAL } from '../../graphql/mutations/TransactionsMutations';
 import Toast from 'react-native-root-toast';
 
 
-const DepositDetailsScreen = ({navigation}) => {
+const WithdrawalScreen = ({navigation}) => {
 
   const [amount, setAmount] = React.useState<string | null>(null);
-  const [trnxHash, setTrnxHash] = React.useState<string|null>(null);
 
-
-  const [deposit, {loading, error}] = useMutation(NEW_DEPOSIT)
+  const [deposit, {loading, error}] = useMutation(NEW_WITHDRAWAL)
 
 
   const handleDeposit = async() => {
 
-    deposit({variables: {amount: parseInt(amount),  trnxHash},
+    deposit({variables: {amount: parseInt(amount)},
     onCompleted: (data) => {
       if (data) {
-        navigation.replace('Fund-Success')
-      }
-    },
-  })
-    
-  }
+        navigation.replace('Withdrawal-Success')
+         }
+        },
+      })
+     }
 
 
   
@@ -45,17 +42,17 @@ const DepositDetailsScreen = ({navigation}) => {
                hideOnPress={true}
                backgroundColor={danger}
             >
-    {error.message}
-  </Toast>
-)}
+            {error.message}
+           </Toast>
+      )}
 
-      <UI.BackButton navigation={navigation} screenName='Deposit Details'/>
+      <UI.BackButton navigation={navigation} screenName='Withdrawal Details'/>
       
       {/* Transfer Details */}
       <View style={styles.transferDetailsContainer}>
         
         {/* row */}
-        <UI.CustomText color={success} bold  size='xs' style={{textAlign: "center", marginBottom: 12}}>Please Enter Depposit details of your USDT transanctions for Confirmation.</UI.CustomText>
+        <UI.CustomText color={success} bold  size='xs' style={{textAlign: "center", marginBottom: 12}}>Please Enter the amount you wish to Withdraw.</UI.CustomText>
 
       </View>
 
@@ -64,9 +61,9 @@ const DepositDetailsScreen = ({navigation}) => {
             
 
             <View  style={{marginBottom: 24}}>
-              <UI.CustomText size='xs' bold style={{marginBottom: 8}}>Enter amount</UI.CustomText>
+              <UI.CustomText size='xs' bold style={{marginBottom: 8}}>Enter Amount</UI.CustomText>
               <UI.FormInput 
-              placeholder="$100-Unlimited"
+              placeholder="Enter Amount"
               keyboardType="numeric"
               secureTextEntry={false}
               editable={true}
@@ -74,23 +71,8 @@ const DepositDetailsScreen = ({navigation}) => {
               value={amount}
               onChangeText={(value)=>setAmount(value)}
               />
-            </View>
 
-
-            <View  style={{marginBottom: 24}}>
-              <UI.CustomText size='xs' bold style={{marginBottom: 8}}>Enter Transaction Hash</UI.CustomText>
-              <UI.FormInput 
-              placeholder="USDT Transanction Hash"
-              keyboardType="default"
-              secureTextEntry={false}
-              editable={true}
-              selectTextOnFocus={true}
-              value={trnxHash}
-              onChangeText={(value)=>setTrnxHash(value)}
-              />
-            </View>
-        
-
+          </View>
       </View>
 
       <View style={styles.button}>
@@ -122,4 +104,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default DepositDetailsScreen
+export default WithdrawalScreen

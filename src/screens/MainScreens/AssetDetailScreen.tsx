@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { SafeAreaView, View, StyleSheet, StatusBar, Image, ScrollView, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
 import { success } from '../../components/common/variables';
@@ -10,23 +10,31 @@ const AssetDetailScreen = ({navigation, route}) => {
     const [duration, setDuration] = React.useState("Day")
     const {item} = route.params
 
+
+    const handlePosition = useCallback((direction: string)=>{
+      navigation.navigate("New-Asset", {item, direction})
+    }, [])
+
+
+    const date = new Date(item.date).toDateString()
+
   return (
     <SafeAreaView style={styles.containner}>
-      <UI.BackButton navigation={navigation} screenName='My assets'/>
+      <UI.BackButton navigation={navigation} screenName={item.ticker}/>
 
       <ScrollView style={{width: "100%", marginBottom: 30,}} showsVerticalScrollIndicator={false}> 
          
            <View style={{flexDirection: 'row', width: '100%',}}>
-                <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
+                <Image source={{uri: item.stock.image}} height={40} width={40} style={{borderRadius: 20}}/>
                 <View style={{marginLeft: 12}}>
-                   <UI.CustomText size='sm' bold>{item.title}</UI.CustomText>
-                   <UI.CustomText size='xs'>APPL</UI.CustomText>
+                   <UI.CustomText size='sm' bold>{item.stock.name}</UI.CustomText>
+                   <UI.CustomText size='xs'>{item.stock.ticker}</UI.CustomText>
                 </View>
             </View>
 
            <View style={{marginVertical: 10}}>
-                 <UI.CustomText size='md' bold>#243,000</UI.CustomText>
-                 <UI.CustomText size='xs' color={success}>^  284%</UI.CustomText>
+                 <UI.CustomText size='md' bold>{`$${item.volume * item.stock.price}`}</UI.CustomText>
+                 <UI.CustomText size='xs' color={item.currentPercent > 0 ? success: 'red' }>{`${item.currentPercent > 0 ? '▲': '▼' } ${item.currentPercent}%`}</UI.CustomText>
           </View>
 
           <View style={{flexDirection: "row", gap: 8}}>
@@ -41,33 +49,28 @@ const AssetDetailScreen = ({navigation, route}) => {
           </View>
 
           <View style={{width: "100%", padding: 4, marginVertical: 8}}>
-            <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
-                <UI.CustomText size='sm'>Position</UI.CustomText>
-                <UI.CustomText size='sm'>35</UI.CustomText>
-            </View>
+           
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
                 <UI.CustomText size='sm'>Open</UI.CustomText>
-                <UI.CustomText size='sm'>60.6B</UI.CustomText>
+                <UI.CustomText size='sm'>{`$ ${item.price}`}</UI.CustomText>
             </View>
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
-                <UI.CustomText size='sm'>Prev.close</UI.CustomText>
-                <UI.CustomText size='sm'>56.90</UI.CustomText>
+                <UI.CustomText size='sm'>Prev.price</UI.CustomText>
+                <UI.CustomText size='sm'>{`$ ${item.stock.prevClose}`}</UI.CustomText>
             </View>
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
                 <UI.CustomText size='sm'>Mkt.cap</UI.CustomText>
-                <UI.CustomText size='sm'>N25.606B</UI.CustomText>
+                <UI.CustomText size='sm'>{`$ ${item.stock.marketCap}`}</UI.CustomText>
+            </View>
+            <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
+                <UI.CustomText size='sm'>Date</UI.CustomText>
+                <UI.CustomText size='sm'>{date}</UI.CustomText>
             </View>
 
           </View>
 
 
-          {/* buttons */}
-          <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
-                <UI.SmallButton size="large" text='Sell' variant='light'/>
-                <UI.SmallButton size="large" text='Buy' variant='coloured' onPress={()=>navigation.navigate("Buy-Asset", {item})}/>
-                
-            </View>
-
+        
       </ScrollView>
     </SafeAreaView>
   )

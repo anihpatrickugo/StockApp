@@ -60,7 +60,7 @@ const HomeScreen = ({navigation}) => {
             <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
                 <View >
                    <UI.CustomText size='sm' color='#F6F6FE'>Account Balance</UI.CustomText>
-                    <UI.CustomText size='xl' color='#F6F6FE' bold style={{marginVertical: 1}}>{!showBalance ? `$ ${user.balance}` : '*****'}</UI.CustomText>
+                    <UI.CustomText size='xl' color='#F6F6FE' bold style={{marginVertical: 1}}>{!showBalance ? `$ ${user?.balance}` : '*****'}</UI.CustomText>
                 </View>
 
                 {/* acoordion */}
@@ -82,12 +82,12 @@ const HomeScreen = ({navigation}) => {
                 <UI.CustomText size='sm'>Fund</UI.CustomText>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.actionItems}>
+            <TouchableOpacity style={styles.actionItems} onPress={()=>navigation.navigate("Withdrawal")}>
                 <Withdraw height={65} width={65}/>
                 <UI.CustomText size='sm'>Withdraw</UI.CustomText>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.actionItems}>
+            <TouchableOpacity style={styles.actionItems} onPress={()=>navigation.navigate("Stock-Market")}>
                 <Invest height={65} width={65}/>
                 <UI.CustomText size='sm'>Invest</UI.CustomText>
             </TouchableOpacity>

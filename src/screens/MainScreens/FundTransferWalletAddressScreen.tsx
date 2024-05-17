@@ -1,13 +1,12 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Pressable, Platform, ToastAndroid, Dimensions} from 'react-native'
+import { SafeAreaView, View, StyleSheet, StatusBar, Pressable, Dimensions} from 'react-native'
 import * as Clipboard from 'expo-clipboard';
 import * as UI from '../../components/common'
 import TetherIcon from '../../assets/icons/Tether'
-import NumIcon from '../../assets/icons/123'
-import UserIcon from '../../assets/icons/PurpleAvatar'
 import CopyIcon from '../../assets/icons/Copy'
 import { grayLightColor, success } from '../../components/common/variables';
 import QRCode from 'react-native-qrcode-svg';
+import Toast from 'react-native-root-toast';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -21,20 +20,24 @@ const FundTransferWalletAddressScreen = ({navigation}) => {
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(WALLET_ADDRESS);
     // Display a success message 
-    if (Platform.OS === 'android') { 
-      ToastAndroid.show('Wallet Address copied to clipboard!', 
-          ToastAndroid.SHORT); 
-  } else if (Platform.OS === 'ios') { 
-      // console.log("ios")
-  } 
+    let toast = Toast.show('Wallet Address copied to clipboard.', {
+      duration: Toast.durations.SHORT,
+      visible: true,
+      position: 125,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      backgroundColor: success,
+      containerStyle: {padding: 2, borderRadius: 10}
+    });
 
-  setCopied(true);
-  };
-
+      setCopied(true);
+    };
+    
 
   return (
     <SafeAreaView style={styles.containner}>
-      <UI.BackButton navigation={navigation} screenName='Home'/>
+      <UI.BackButton navigation={navigation} screenName='Fund'/>
 
         <UI.CustomText size='xs' bold color={success} style={{textAlign: "center"}}>Send the the desired amout (must be above $100) to this wallet address below.</UI.CustomText>
       

@@ -1,40 +1,53 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, StatusBar, Image, FlatList, TouchableOpacity, Dimensions} from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, FlatList, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import {grayLightColor, success } from '../../components/common/variables';
-import recentTransactions from '../../constants/recentTransactions';
+import {danger, grayLightColor } from '../../components/common/variables';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_STOCKS } from '../../graphql/queries/allstocks';
+import Toast from 'react-native-root-toast';
+import StockItem from '../../components/main/StockItem';
 
 const { width, height} = Dimensions.get("screen")
 
 const StockMarketScreen = ({navigation}) => {
+    const {data, loading, error} = useQuery(GET_ALL_STOCKS)
+    
 
   return (
     <SafeAreaView style={styles.containner}>
+          {loading && <UI.Loading />}
+
+          {error && (
+            <Toast
+               visible={true}
+                position={60}
+                shadow={true}
+                animation={true}
+                hideOnPress={true}
+                backgroundColor={danger}
+            >
+            {error.message}
+          </Toast>
+         )}
+
+         {data.allStocks.length == 0 && <UI.CustomText size='lg' >No stocks available</UI.CustomText>}
+
+         {/* stock market list */}
       <UI.BackButton navigation={navigation} screenName='Stock market'/>
 
       {/* stock list */}
       <FlatList
                overScrollMode='never'
-               data={recentTransactions}
+               data={data.allStocks}
                keyExtractor={(item, index) => index.toString()}
-               contentContainerStyle={{width: "100%", minHeight: 500}}
+               style={{width: '100%', height: 290}}
                renderItem={
                 ({item}) => (
-                    <TouchableOpacity style={styles.stockItem}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
-                            <View style={{marginLeft: 6}}>
-                               <UI.CustomText size='sm'>{item.title}</UI.CustomText>
-                               <UI.CustomText size='xs'>APPL</UI.CustomText>
-                            </View>
-                        </View>
-
-                        <UI.CustomText size='sm' color={success}>^  284%</UI.CustomText>
-                    </TouchableOpacity>
+                    <StockItem item={item} navigation={navigation}/>
                 )
                }
                showsVerticalScrollIndicator={false}
-             />
+         />
       
     </SafeAreaView>
     )

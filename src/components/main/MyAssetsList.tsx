@@ -1,11 +1,22 @@
 import React from 'react'
-import { View, FlatList, Image, Pressable, TouchableOpacity } from 'react-native';
-import recentTransactions from '../../constants/recentTransactions';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { grayColor, success } from '../common/variables';
+import { View, FlatList, Pressable } from 'react-native';
 import * as UI from '../common' 
+import { useQuery } from '@apollo/client';
+import { GET_ALL_POSITIONS } from '../../graphql/queries/positions';
+import AssetItem from './AssetItem';
+
 
 const MyAssetsList = ({navigation}) => {
+
+  const {data, loading, error} = useQuery(GET_ALL_POSITIONS)
+
+  if (loading) return <UI.Loading/>
+
+  if (error) return <UI.CustomText size='lg' >Error: {error.message}</UI.CustomText>
+
+  if (!data.openPositions || data.openPositions.length == 0) return <UI.CustomText size='lg' >No Open positions</UI.CustomText>
+
+
   return (
     <View style={{ width: '100%', marginTop: 20,}}>
     <View style={{ width: '100%', flexDirection: "row", justifyContent: "space-between",}}>
@@ -17,31 +28,14 @@ const MyAssetsList = ({navigation}) => {
 
     <FlatList
       overScrollMode='never'
-      data={recentTransactions}
+      data={data.openPositions}
       keyExtractor={(item, index) => index.toString()}
       style={{width: '100%',}}
       horizontal
       showsHorizontalScrollIndicator={false}
       renderItem={
        ({item}) => (
-           <TouchableOpacity 
-           style={{width: 130, borderWidth: 1, borderColor: grayColor, borderRadius: 15, marginRight:8, padding: 8,}}>
-               <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 8}}>
-                   <Image source={{uri: item.image}} height={30} width={30} style={{borderRadius: 20}}/>
-                   <View style={{marginLeft: 6}}>
-                      <UI.CustomText size='xs'>{item.title}</UI.CustomText>
-                      <UI.CustomText size='xs'>APPL</UI.CustomText>
-                   </View>
-               </View>
-
-               <UI.CustomText size='xs' bold>#243,000</UI.CustomText>
-             
-
-              <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:'baseline'}}>
-                <UI.CustomText size='xs' color={success}>^  284%</UI.CustomText>
-                <MaterialCommunityIcons name="greater-than" size={14} color={grayColor} />
-              </View>
-           </TouchableOpacity>
+          <AssetItem item={item} navigation={navigation}/>
        )
       }
     />
