@@ -58,4 +58,25 @@ mutation VerifyEmailToken ($token: String!) {
   verifyUser(token: $token) {
     success
   }
-}`
+}
+`
+
+export const CHANGE_PIN = gql`
+mutation ChangePin($newPin: Int!, $oldPin: Int!) {
+  changePin(newPin: $newPin, oldPin: $oldPin){
+    user{
+      email
+    }
+  }
+}
+
+`
+export const REQUEST_NEW_PIN = gql`
+mutation {
+  requestNewPin {
+    success
+  }
+}
+`
+
+

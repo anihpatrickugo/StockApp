@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, FlatList, Image, TouchableOpacity, Pressable, StyleSheet } from 'react-native'
+import { View, FlatList, Pressable } from 'react-native'
 import * as UI from '../common/index';
-import { grayLightColor, success } from '../common/variables';
+import VerticalListLoadingSkeleton from '../LoadingSkeletons/VerticalListLoadingSkeleton';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_STOCKS } from '../../graphql/queries/allstocks';
 import StockItem from './StockItem';
@@ -12,7 +12,7 @@ const StockMarketList = ({navigation}) => {
     const {data, loading, error} = useQuery(GET_ALL_STOCKS)
     // console.log(data)
 
-  if (loading) return <UI.Loading/>
+  if (loading) return <VerticalListLoadingSkeleton itemsNo={4} height={290}/>
 
   if (error) return <UI.CustomText size='lg' >Error: {error.message}</UI.CustomText>
   return (

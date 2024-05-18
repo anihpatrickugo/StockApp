@@ -8,7 +8,7 @@ interface Props extends TextProps {
 }
 
 const CustomText: FC<Props> = ({children, size, bold, color, style, ...props}) => {
-   let variantStyles = {fontSize: null, lineHeight: null, fontWeight: null, color: color}
+   let variantStyles = {fontSize: null, lineHeight: null, fontWeight: null, color: color, fontFamily: 'Roboto_500Medium'}
 
 
 //   custom sizes

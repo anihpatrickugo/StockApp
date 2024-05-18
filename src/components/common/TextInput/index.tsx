@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
         backgroundColor: secondaryColor,
         height: 40,
         padding: 12,
-        borderRadius: 8
+        borderRadius: 8,
+        fontFamily: 'Roboto_500Medium'
  
     }
 })

@@ -5,6 +5,7 @@ import TransactionList from '../../components/main/TransactionList'
 import { GET_TRANSACTIONS } from '../../graphql/queries/transanctions'
 import { useQuery } from '@apollo/client';
 import { primaryColor } from '../../components/common/variables'
+import VerticalListLoadingSkeleton from '../../components/LoadingSkeletons/VerticalListLoadingSkeleton'
 
 const { width, height} = Dimensions.get("screen")
 
@@ -15,7 +16,7 @@ const TransanctionsScreen = () => {
 
   return (
     <SafeAreaView style={styles.containner}>
-      {loading && <UI.Loading />}
+      {loading && <VerticalListLoadingSkeleton itemsNo={9} height={height}/>}
 
       {/* header */}
       <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 10}}>
@@ -41,6 +42,7 @@ const TransanctionsScreen = () => {
 
             <TransactionList recentTransactions={data?.recentTransactions.filter(item => category === "All" ? true : item.name === category)} />
       </View>
+
     </SafeAreaView>
   )
 }

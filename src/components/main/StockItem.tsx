@@ -5,7 +5,7 @@ import { grayLightColor } from '../common/variables';
 
 const StockItem = ({item, navigation}) => {
   return (
-    <TouchableOpacity style={styles.transactionItem}  onPress={()=>navigation.navigate("Stock-Detail", {item})}>
+                  <TouchableOpacity style={styles.transactionItem}  onPress={()=>navigation.navigate("Stock-Detail", {item})}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                             <View style={{marginLeft: 6}}>

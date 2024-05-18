@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
       buttonText: {
         textAlign: "center",
         color: "white",
+        fontFamily: 'Roboto_500Medium'
       }
 })
 export {Button};

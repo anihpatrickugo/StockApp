@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     letterSpacing: 2,
-    marginTop: 16
+    marginTop: 16,
+    fontFamily: 'Roboto_500Medium'
   }
 });
 

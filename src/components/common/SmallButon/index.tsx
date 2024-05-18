@@ -98,7 +98,8 @@ const SmallButton: FC<Props> = ({text, size, variant, noBorder, style, ...props}
       buttonText: {
         textAlign: "center",
         color: "white",
-        fontSize: 12
+        fontSize: 12,
+        fontFamily: 'Roboto_500Medium'
       }
     }
     break;

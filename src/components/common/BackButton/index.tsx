@@ -11,7 +11,7 @@ const BackButton: React.FC<Props> = ({navigation, screenName}) => {
   return (
     <Pressable  style={styles.backButton} onPress={()=>navigation.goBack()}>
         <AntDesign name="left" size={24} color="black" />
-           <Text style={{marginLeft: 10, fontWeight: '600', fontSize: 16, lineHeight: 30}}>
+           <Text style={{marginLeft: 10, fontWeight: '600', fontSize: 16, lineHeight: 30, fontFamily: 'Roboto_500Medium'}}>
              {screenName}
             </Text>
     </Pressable>

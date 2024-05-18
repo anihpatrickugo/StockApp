@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
         padding: 12,
         borderWidth: 1,
         borderColor: grayColor,
-        borderRadius: 8
+        borderRadius: 8,
+        fontFamily: 'Roboto_500Medium'
  
     }
 })

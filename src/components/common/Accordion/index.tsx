@@ -31,7 +31,7 @@ const Accordion = () => {
             <USAIcon width={18} height={18}/>
         )}
 
-        <Text style={{color: "#FFFFFF", fontWeight: '700', fontSize: 16}}>{currency === "Naira" ? 'NG Naira': 'US Dollar' }</Text>
+        <Text style={{color: "#FFFFFF", fontWeight: '700', fontSize: 16, fontFamily: 'Roboto_500Medium'}}>{currency === "Naira" ? 'NG Naira': 'US Dollar' }</Text>
         {/* { open ? (
             <AntDesign name='up' size={24} color="#FFFFFF" />
             ): (
@@ -44,11 +44,11 @@ const Accordion = () => {
     <View style={{display: open ? 'flex' : 'none', width: '100%', backgroundColor: 'white', borderRadius: 20, paddingHorizontal: 8}}>
         <Pressable style={styles.listItem}  onPress={()=>setTheCurrency('Naira')}>
             <NigeriaIcon width={18} height={18}/>
-             <Text style={{color: primaryColor, fontWeight: '700', fontSize: 16}}>NG Naira</Text>
+             <Text style={{color: primaryColor, fontWeight: '700', fontSize: 16, fontFamily: 'Roboto_500Medium'}}>NG Naira</Text>
         </Pressable>
         <Pressable style={styles.listItem} onPress={()=>setTheCurrency('Dollar')}>
             <USAIcon width={18} height={18}/>
-             <Text style={{color: primaryColor, fontWeight: '700', fontSize: 16}}>US Dollar</Text>
+             <Text style={{color: primaryColor, fontWeight: '700', fontSize: 16, fontFamily: 'Roboto_500Medium'}}>US Dollar</Text>
         </Pressable>
 
     </View>

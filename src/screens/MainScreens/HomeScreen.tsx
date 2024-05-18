@@ -7,7 +7,7 @@ import Fund from '../../assets/icons/Fund';
 import Withdraw from '../../assets/icons/Withdraw';
 import Invest from '../../assets/icons/Invest';
 import BellOutline from '../../assets/icons/BellOutline';
-import recentTransactions from '../../constants/recentTransactions';
+import VerticalListLoadingSkeleton from '../../components/LoadingSkeletons/VerticalListLoadingSkeleton';
 import { FontAwesome5 } from '@expo/vector-icons';
 import TransactionList from '../../components/main/TransactionList';
 import { useSelector } from 'react-redux';
@@ -99,11 +99,8 @@ const HomeScreen = ({navigation}) => {
         <View style={{ width: '100%', marginTop: 45,}}>
             <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Recent Actions</UI.CustomText>
 
-            {loading && <UI.CustomText 
-                size='md' 
-                bold  color={primaryColor}
-               style={{textAlign: "center", marginVertical: 60}}>Getting Recent Transactions...</UI.CustomText>
-            }
+            {loading && <VerticalListLoadingSkeleton itemsNo={4} height={290}/>}
+            
 
             {data?.recentTransactions.length === 0 && <UI.CustomText 
                 size='md' 
@@ -115,7 +112,7 @@ const HomeScreen = ({navigation}) => {
             <TransactionList
             modalVisible={modalVisible}
             recentTransactions={data?.recentTransactions}
-            />         
+            />        
         </View>
 
     </SafeAreaView>
