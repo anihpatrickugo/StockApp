@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity, Dimensions } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
-import {primaryColor} from '../../components/common/variables'
+import {darkGrayColor, grayColor, primaryColor} from '../../components/common/variables'
 import Fund from '../../assets/icons/Fund';
 import Withdraw from '../../assets/icons/Withdraw';
 import Invest from '../../assets/icons/Invest';
@@ -96,16 +96,17 @@ const HomeScreen = ({navigation}) => {
 
 
         {/* recent transanctions */}
-        <View style={{ width: '100%', marginTop: 45,}}>
+        <View style={{ width: '100%', marginTop: 45, flex: 1, justifyContent: "center"}}>
             <UI.CustomText size='sm' bold style={{paddingBottom: 6}}>Recent Actions</UI.CustomText>
 
-            {loading && <VerticalListLoadingSkeleton itemsNo={4} height={290}/>}
+            {loading && <VerticalListLoadingSkeleton itemsNo={4} />}
             
 
-            {data?.recentTransactions.length === 0 && <UI.CustomText 
+            {(!loading && data?.recentTransactions.length) === 0 && <UI.CustomText 
                 size='md' 
                 bold
-               style={{textAlign: "center", marginVertical: 60}}>No Recent Transaction</UI.CustomText>
+                color={darkGrayColor}
+                style={{textAlign: "center", marginVertical: 60}}>No Recent Transaction</UI.CustomText>
             }
             
             
@@ -113,6 +114,7 @@ const HomeScreen = ({navigation}) => {
             modalVisible={modalVisible}
             recentTransactions={data?.recentTransactions}
             />        
+            
         </View>
 
     </SafeAreaView>
@@ -126,7 +128,8 @@ const styles = StyleSheet.create({
         padding: 14,
         alignItems: 'center',
         width: width,
-        height: height
+        height: height,
+        flex: 1
     },
 
     topHeader: {

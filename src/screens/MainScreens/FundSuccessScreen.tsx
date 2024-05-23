@@ -2,6 +2,7 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, StatusBar, View, Dimensions} from 'react-native'
 import * as UI from '../../components/common/index';
 import Success from '../../assets/icons/Success';
+import Animated, { BounceIn } from 'react-native-reanimated';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -11,12 +12,12 @@ const FundSuccesScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.containner}>
       
-      <View style={styles.message}>
+      <Animated.View entering={BounceIn.duration(1000)} style={styles.message}>
           <Success height={160} width={160} style={styles.icon}/>
           <UI.CustomText size='sm' bold style={styles.text}>
            Deposit request was successfull. Please Wait for confirmation.
           </UI.CustomText>
-      </View>
+      </Animated.View>
 
       <View style={styles.buttonContainner}>
         <UI.Button text='Invest now' variant='coloured' style={{marginBottom: 10}} onPress={()=>navigation.navigate("Invest")}/>

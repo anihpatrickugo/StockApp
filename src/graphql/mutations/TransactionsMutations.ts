@@ -49,5 +49,13 @@ mutation NewPosition ($direction: String!, $ticker: String!, $volume: Int!, $pin
 }
 `;
 
+export const CLOSE_POSITION = gql`
+mutation ClosePosition($id: Int!) {
+  closePosition(id: $id){
+    Success
+  }
+}
+`;
+
 
 

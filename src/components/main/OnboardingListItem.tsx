@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { BounceIn } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width;
@@ -19,7 +19,7 @@ interface Props {
 
 const OnboardingListItem: FC<Props> = ({item}) => {
   return (
-    <Animated.View style={styles.itemContainer}>
+    <Animated.View entering={BounceIn.duration(1000)} style={styles.itemContainer}>
     <Image source={item.image} style={styles.onboardingImage}/>
 
     <View>

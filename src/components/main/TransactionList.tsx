@@ -2,7 +2,9 @@ import React, {Dispatch, SetStateAction } from 'react'
 import { FlatList, TouchableOpacity, View, Image, StyleSheet } from 'react-native'
 import * as UI from '../../components/common/index';
 import { grayLightColor } from '../common/variables';
+import Animated, {SlideInLeft} from 'react-native-reanimated';
 
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 interface Props {
     modalVisible? : boolean,
     setModalVisible? : Dispatch<SetStateAction<boolean>>,
@@ -15,10 +17,10 @@ const TransactionList: React.FC<Props> = ({modalVisible, recentTransactions}) =>
                overScrollMode='never'
                data={recentTransactions}
                keyExtractor={(item, index) => index.toString()}
-               style={{width: '100%', height: 300}}
+               style={{width: '100%', flex: 1}}
                renderItem={
-                ({item}) => (
-                    <TouchableOpacity style={[styles.transactionItem, { borderBottomColor: modalVisible ? "gray" : grayLightColor}]}>
+                ({item, index}) => (
+                    <AnimatedTouchableOpacity entering={SlideInLeft.delay(index * 100)} style={[styles.transactionItem, { borderBottomColor: modalVisible ? "gray" : grayLightColor}]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             { item.logo ? (<Image source={{uri: item.logo}} height={40} width={40} style={{borderRadius: 20}}/>) : (
                                 <Image source={item.name === "Deposit" ?
@@ -38,7 +40,7 @@ const TransactionList: React.FC<Props> = ({modalVisible, recentTransactions}) =>
                            <UI.CustomText size='sm' style={{}} bold>{`$${item.amount}`}</UI.CustomText>
 
 
-                    </TouchableOpacity>
+                    </AnimatedTouchableOpacity>
                 )
                }
                showsVerticalScrollIndicator={false}

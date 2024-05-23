@@ -1,7 +1,9 @@
 import React from 'react'
 import {  View, StyleSheet, StatusBar, Image, ScrollView, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import { primaryColor } from '../../components/common/variables';
+import { danger, primaryColor } from '../../components/common/variables';
+import Animated, { LightSpeedInLeft, LightSpeedInRight } from 'react-native-reanimated';
+import Toast from 'react-native-root-toast';
 
 
 
@@ -11,6 +13,22 @@ const { width, height} = Dimensions.get("screen")
 const NewAssetScreen = ({navigation, route}) => {
     const {item, direction} = route.params
     const [amount, setAmount] = React.useState("")
+    const total = parseInt(amount) * item.price
+
+    const handleConfirm = ()=>{
+      if (total <= 0 || isNaN(total)){
+        Toast.show("Please enter a valid amount", {
+          position: 60,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          backgroundColor: danger
+        })
+      }
+      else{
+        navigation.navigate("Confirm-Stock", {item, direction, amount})
+      }
+    }
 
   return (
     <ScrollView  style={styles.containner}>
@@ -19,18 +37,18 @@ const NewAssetScreen = ({navigation, route}) => {
       <ScrollView style={{width: "100%", height: 500}} showsVerticalScrollIndicator={false}> 
           
         <View style={{flexDirection: "row", justifyContent: "space-between",alignItems:"flex-start", width: "100%"}}>
-            <View style={{flexDirection: 'row'}}>
+            <Animated.View entering={LightSpeedInLeft.duration(1000)} style={{flexDirection: 'row'}}>
                 <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                 <View style={{marginLeft: 12}}>
                    <UI.CustomText size='sm' bold>{item.name}</UI.CustomText>
                    <UI.CustomText size='xs'>{item.ticker}</UI.CustomText>
                 </View>
-            </View>
+            </Animated.View>
 
-           <View>
+           <Animated.View entering={LightSpeedInRight.duration(1000)}>
                  <UI.CustomText size='md' bold>{`$ ${item.price}`}</UI.CustomText>
                  <UI.CustomText size='sm' >Market price</UI.CustomText>
-          </View>
+          </Animated.View>
 
         </View>
 
@@ -53,7 +71,7 @@ const NewAssetScreen = ({navigation, route}) => {
             </View>
             
             <View style={{marginVertical: 16}}>
-               <UI.Button text='Continue' variant='coloured' onPress={()=>navigation.navigate("Confirm-Stock", {item, direction, amount})}/>
+               <UI.Button text='Continue' variant='coloured' onPress={handleConfirm}/>
             </View>
         </View>
 

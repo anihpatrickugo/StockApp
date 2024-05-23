@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
+    "primaryColor": "#E1AE3C",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain",
@@ -15,7 +16,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIndentifier": "com.anihpatrickugo.StockPay",
+      "supportsTablet": true,
+      "infoPlist": {
+       "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.77067681655-ct1u80q6b9siphg7t2o4vt18dbun5qlp"
+            ]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {

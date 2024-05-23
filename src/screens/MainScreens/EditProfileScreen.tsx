@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { SafeAreaView, StyleSheet, StatusBar, Text, Button, View, Image, Dimensions,KeyboardAvoidingView, Pressable} from 'react-native'
 import { useMutation } from '@apollo/client';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -49,16 +49,60 @@ const EditProfileScreen = ({navigation}) => {
 
   const handleEdit = async() => {
 
+     // check that there must be an email
+    if (email === null || email === '' || email === undefined) {
+        let toast = Toast.show('Please enter an email.', {
+          duration: Toast.durations.LONG,
+          visible: true,
+          position: 60,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          backgroundColor: danger,
+        });
+        return
+    }
+
+    //  check that there must me a photo
+    if (photo === null || photo === '' || photo === undefined) {
+      let toast = Toast.show('Please select a photo.', {
+        duration: Toast.durations.LONG,
+        visible: true,
+        position: 60,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        backgroundColor: danger,
+      });
+      return
+    }
+
+    // check that there must be a wallet address
+    if (walletAddress === null || walletAddress === '' || walletAddress === undefined) {
+      let toast = Toast.show('Please enter a Valid USDT wallet address.', {
+        duration: Toast.durations.LONG,
+        visible: true,
+        position: 60,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        backgroundColor: danger,
+      });
+      return
+    }
+    
+
     let newFile = serializePhoto(photo)
     let imageFile = await uploadToCloudinary(newFile)
    
-  
+
+
     editUser({variables: {firstname, lastname, email, walletAddress, photo: imageFile},
     onCompleted: (data) => {
       if (data) {
-        navigation.navigate('Profile')
+        navigation.navigate('Invest')
         
-        let toast = Toast.show('Successfully Edited Profile.', {
+        Toast.show('Successfully Edited Profile.', {
             duration: Toast.durations.LONG,
             visible: true,
             position: 60,
@@ -69,13 +113,9 @@ const EditProfileScreen = ({navigation}) => {
           });
       }
     },
-    // onError: (error) => {
-    //   ToastAndroid.showWithGravity(
-    //     error.message,
-    //     ToastAndroid.SHORT,
-    //     ToastAndroid.CENTER
-    //   );
-    // },
+    onError: (error) => {
+      console.log(error.networkError.result.errors[0].message)
+    },
      })
     
   }
@@ -174,12 +214,12 @@ const EditProfileScreen = ({navigation}) => {
               <Image height={60} width={60} style={{borderRadius: 100}} source={{uri: photo || user.photo}}/>
             ) : (
               
-              <FontAwesome5 name="user-plus" size={50} color={primaryColor} />
+              <FontAwesome5 name="user-slash" size={50} color={primaryColor} />
             )}
 
             
             <View style={{position: 'absolute', bottom: -5, right: -5}}>
-                   <FontAwesome5 name="plus" size={20} color="black" />
+                   <FontAwesome5 name="camera" size={20} color="black" />
             </View> 
             
         

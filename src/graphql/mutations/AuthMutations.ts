@@ -1,5 +1,24 @@
 import { gql } from "@apollo/client";
 
+export const GOOGLE_SIGN_IN = gql`
+mutation SocialAuth ($accessToken: String!, $provider: String!) {
+  socialAuth(accessToken: $accessToken, provider: $provider){
+    social{
+      user{
+        id
+        firstName
+        lastName
+        balance
+        walletAddress
+        photo
+      }
+    }
+    token 
+  }
+}
+`;
+
+
 export const SIGN_USER_IN = gql`
   mutation SignUserIn($email: String!, $password: String!) {
     tokenAuth(email: $email, password: $password) {
@@ -22,10 +41,6 @@ mutation SignUserUp ($firstname: String!, $lastname: String!, $email: String!, $
         lastName
         walletAddress
         balance
-        lastLogin
-        isStaff
-        isActive
-        dateJoined
       }
     }
   }
@@ -43,10 +58,6 @@ mutation EditUser($firstname: String!, $lastname: String!, $email: String!, $wal
       lastName
       walletAddress
       balance
-      lastLogin
-      isStaff
-      isActive
-      dateJoined
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { useRef, useState, FC } from 'react';
 import { View, SafeAreaView, Text, Dimensions, StyleSheet } from 'react-native';
-import Animated, { useSharedValue } from 'react-native-reanimated';
+import Animated, { useSharedValue, ZoomIn } from 'react-native-reanimated';
 import { primaryColor, grayColor } from '../../components/common/variables';
 import onboardingData from '../../constants/onboardingData';
 import OnboardingListItem from '../../components/main/OnboardingListItem';
@@ -56,9 +56,9 @@ const OnboardingScreen:FC<Props> = ({ navigation }) => {
  
 
     {/* flatlist  counter items  */}
-    <View style={styles.animationContainner}>
+    <Animated.View entering={ZoomIn.duration(1000).delay(500)} style={styles.animationContainner}>
     {onboardingData.map(({}, index:number) => <Text key={index} style={[styles.animationItem, (index ===  currentIndex ? {paddingHorizontal: 10, backgroundColor: primaryColor}: {paddingHorizontal: 4, backgroundColor: grayColor})]}> </Text>)}
-    </View>
+    </Animated.View>
 
     {/* buttons */}
     <View style={styles.buttons}>

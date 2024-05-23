@@ -7,6 +7,7 @@ import CopyIcon from '../../assets/icons/Copy'
 import { grayLightColor, success } from '../../components/common/variables';
 import QRCode from 'react-native-qrcode-svg';
 import Toast from 'react-native-root-toast';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -42,7 +43,7 @@ const FundTransferWalletAddressScreen = ({navigation}) => {
         <UI.CustomText size='xs' bold color={success} style={{textAlign: "center"}}>Send the the desired amout (must be above $100) to this wallet address below.</UI.CustomText>
       
       {/* Transfer Details */}
-      <View style={[styles.transferDetailsContainer, {backgroundColor: copied && grayLightColor, marginTop: 32}]}>
+      <Animated.View entering={FadeIn.duration(1000)} style={[styles.transferDetailsContainer, {backgroundColor: copied && grayLightColor, marginTop: 32}]}>
         
         {/* row */}
         <View style={{flexDirection: 'row', alignItems: "center", marginBottom: 10, gap: 10}}>
@@ -89,7 +90,7 @@ const FundTransferWalletAddressScreen = ({navigation}) => {
             <UI.CustomText size='xs'>Or Scan This Qrcode</UI.CustomText>
         </View>
 
-      </View>
+      </Animated.View>
 
       <UI.Button text='I’ve made the transfer' variant='coloured' onPress={()=>navigation.navigate("Deposit-Details")}/>
     </SafeAreaView>

@@ -5,10 +5,9 @@ import {
   StatusBar,
   View,
   Pressable,
-  ToastAndroid,
   Dimensions,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+
 import * as UI from "../../components/common/index";
 import {
   danger,
@@ -17,17 +16,55 @@ import {
   secondaryColor,
 } from "../../components/common/variables";
 import Logo from "../../assets/icons/Logo";
-import GoogleIcon from "../../assets/icons/Google";
+
 import { useMutation, gql } from "@apollo/client";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../../redux/slices/authSlice";
-import { SIGN_USER_IN } from "../../graphql/mutations/AuthMutations";
+import {
+  SIGN_USER_IN,
+  GOOGLE_SIGN_IN,
+} from "../../graphql/mutations/AuthMutations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-root-toast";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
+import { configureGoogleSignIn } from "../../utils/googleSignInConfigurations";
 
 const { width, height } = Dimensions.get("screen");
 
 const LoginScreen = ({ navigation }) => {
+  // Google Sign In configurations
+
+  const [googleSignIn, { loading: googleLoading }] =
+    useMutation(GOOGLE_SIGN_IN);
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      await GoogleSignin.signIn();
+
+      const accessToken = (await GoogleSignin.getTokens()).accessToken;
+
+      googleSignIn({
+        variables: { accessToken: accessToken, provider: "google-oauth2" },
+        onCompleted: (data) => {
+          if (data.socialAuth.token) {
+            dispatch(setToken(data.socialAuth.token));
+            AsyncStorage.setItem("token", data.socialAuth.token);
+          }
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    configureGoogleSignIn();
+  }, []);
+
   // login credentials
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,20 +86,12 @@ const LoginScreen = ({ navigation }) => {
           AsyncStorage.setItem("token", data.tokenAuth.token);
         }
       },
-
-      // onError: (error) => {
-      //   ToastAndroid.showWithGravity(
-      //     error.message,
-      //     ToastAndroid.SHORT,
-      //     ToastAndroid.CENTER
-      //   );
-      // },
     });
   };
 
   return (
     <SafeAreaView style={styles.containner}>
-      {loading && <UI.Loading />}
+      {(loading || googleLoading) && <UI.Loading />}
 
       {error && (
         <Toast
@@ -120,17 +149,17 @@ const LoginScreen = ({ navigation }) => {
           bold
           style={{ textAlign: "center", marginVertical: 20 }}
         >
-          Or
+          Or Continue With Google
         </UI.CustomText>
 
         {/* social auths */}
         <View style={styles.socialAuthContainner}>
-          <Pressable style={styles.socialAuth}>
-            <GoogleIcon height={25} width={25} />
-          </Pressable>
-          <Pressable style={styles.socialAuth}>
-            <FontAwesome name="apple" size={24} color="black" />
-          </Pressable>
+          <GoogleSigninButton
+            size={GoogleSigninButton.Size.Standard}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={signInWithGoogle}
+            text
+          />
         </View>
 
         <View style={styles.bottomText}>

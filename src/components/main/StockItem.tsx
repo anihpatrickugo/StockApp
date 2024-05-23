@@ -2,20 +2,23 @@ import React from 'react'
 import { TouchableOpacity, View, Image, StyleSheet  } from 'react-native'
 import * as UI from '../common/index';
 import { grayLightColor } from '../common/variables';
+import Animated, {SlideInLeft} from 'react-native-reanimated';
 
-const StockItem = ({item, navigation}) => {
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
+
+const StockItem = ({item, delay, navigation}) => {
   return (
-                  <TouchableOpacity style={styles.transactionItem}  onPress={()=>navigation.navigate("Stock-Detail", {item})}>
+                  <AnimatedTouchableOpacity entering={SlideInLeft.delay(delay)} style={styles.transactionItem}  onPress={()=>navigation.navigate("Stock-Detail", {item})}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
+                            <Animated.Image sharedTransitionTag="Stock-Image" source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                             <View style={{marginLeft: 6}}>
                                <UI.CustomText size='sm'>{item.name}</UI.CustomText>
-                               <UI.CustomText size='xs'>APPL</UI.CustomText>
+                               <UI.CustomText size='xs'>{item.ticker}</UI.CustomText>
                             </View>
                         </View>
 
                         <UI.CustomText size='sm' bold>{`$${item.price}`}</UI.CustomText>
-                    </TouchableOpacity>
+                    </AnimatedTouchableOpacity>
   )
 }
 

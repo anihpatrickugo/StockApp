@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ALL_STOCKS } from '../../graphql/queries/allstocks';
 import Toast from 'react-native-root-toast';
 import StockItem from '../../components/main/StockItem';
+import VerticalListLoadingSkeleton from '../../components/LoadingSkeletons/VerticalListLoadingSkeleton';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -15,25 +16,25 @@ const StockMarketScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.containner}>
-          {loading && <UI.Loading />}
+      <UI.BackButton navigation={navigation} screenName='Stock market'/>
+
+          {loading && <VerticalListLoadingSkeleton itemsNo={8}/>}
 
           {error && (
-            <Toast
-               visible={true}
-                position={60}
-                shadow={true}
-                animation={true}
-                hideOnPress={true}
-                backgroundColor={danger}
-            >
-            {error.message}
-          </Toast>
-         )}
+                 <Toast
+                      visible={true}
+                      position={60}
+                      shadow={true}
+                      animation={true}
+                      hideOnPress={true}
+                      backgroundColor={danger}
+                      >
+                          {error.message}
+                      </Toast>
+          )}
+
 
          {data.allStocks.length == 0 && <UI.CustomText size='lg' >No stocks available</UI.CustomText>}
-
-         {/* stock market list */}
-      <UI.BackButton navigation={navigation} screenName='Stock market'/>
 
       {/* stock list */}
       <FlatList
@@ -42,8 +43,8 @@ const StockMarketScreen = ({navigation}) => {
                keyExtractor={(item, index) => index.toString()}
                style={{width: '100%', height: 290}}
                renderItem={
-                ({item}) => (
-                    <StockItem item={item} navigation={navigation}/>
+                ({item, index}) => (
+                    <StockItem item={item} delay={index*100} navigation={navigation}/>
                 )
                }
                showsVerticalScrollIndicator={false}

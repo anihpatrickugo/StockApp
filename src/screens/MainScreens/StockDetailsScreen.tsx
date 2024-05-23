@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { SafeAreaView, View, StyleSheet, StatusBar, Image, ScrollView, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import { success } from '../../components/common/variables';
-import Chart from '../../components/main/Chart';
+import Animated, { LightSpeedInLeft, StretchInX}  from 'react-native-reanimated'
+
 
 const { width, height} = Dimensions.get("screen")
 
@@ -21,22 +21,21 @@ const StockDetailScreen = ({navigation, route}) => {
 
       <ScrollView style={{width: "100%", marginBottom: 30,}} showsVerticalScrollIndicator={false}> 
          
-           <View style={{flexDirection: 'row', width: '100%',}}>
+           <Animated.View entering={LightSpeedInLeft.duration(1000)} style={{flexDirection: 'row', width: '100%',}}>
                 <Image source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                 <View style={{marginLeft: 12}}>
-                   <UI.CustomText size='sm' bold>{item.name}</UI.CustomText>
+                   <UI.CustomText size='sm' bold >{item.name}</UI.CustomText>
                    <UI.CustomText size='xs'>{item.ticker}</UI.CustomText>
                 </View>
-            </View>
+            </Animated.View>
 
-           <View style={{marginVertical: 10}}>
+           <Animated.View entering={LightSpeedInLeft.duration(1000).delay(500)} style={{marginVertical: 10}}>
                  <UI.CustomText size='md' bold>{`$ ${item.price}`}</UI.CustomText>
+          </Animated.View>
 
-          </View>
+          <Animated.Image sharedTransitionTag="Stock-Image" source={{uri: item.image}} style={{width: "100%", height: width *0.9}}/>
 
-          <Image source={{uri: item.image}} style={{width: "100%", height: width *0.9}}/>
-
-          <View style={{width: "100%", padding: 4, marginVertical: 8}}>
+          <Animated.View entering={StretchInX.delay(500).damping(3000)} style={{width: "100%", padding: 4, marginVertical: 8}}>
            
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
                 <UI.CustomText size='sm'>Open</UI.CustomText>
@@ -51,7 +50,7 @@ const StockDetailScreen = ({navigation, route}) => {
                 <UI.CustomText size='sm'>{`$ ${item.marketCap}`}</UI.CustomText>
             </View>
 
-          </View>
+          </Animated.View>
 
 
           {/* buttons */}

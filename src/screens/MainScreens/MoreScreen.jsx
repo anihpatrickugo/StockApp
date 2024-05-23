@@ -18,11 +18,16 @@ import CustomerCareIcon from "../../assets/icons/CustomerCare";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../../redux/slices/authSlice";
+import Animated, {
+  SlideInLeft,
+  createAnimatedPropAdapter,
+} from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("screen");
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 const MoreScreen = ({ navigation }) => {
   const token = useSelector((state) => state.auth.token);
@@ -66,7 +71,8 @@ const MoreScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         {/* link item */}
-        <TouchableOpacity
+        <AnimatedTouchableOpacity
+          entering={SlideInLeft}
           style={styles.listItem}
           onPress={() => navigation.navigate("Profile")}
         >
@@ -82,10 +88,11 @@ const MoreScreen = ({ navigation }) => {
           </View>
 
           <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
 
         {/* link item */}
-        <TouchableOpacity
+        <AnimatedTouchableOpacity
+          entering={SlideInLeft.delay(100)}
           style={styles.listItem}
           onPress={() => navigation.navigate("Set-Pin")}
         >
@@ -102,10 +109,13 @@ const MoreScreen = ({ navigation }) => {
           </View>
 
           <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
 
         {/* link item */}
-        <TouchableOpacity style={styles.listItem}>
+        <AnimatedTouchableOpacity
+          style={styles.listItem}
+          entering={SlideInLeft.delay(200)}
+        >
           <CustomerCareIcon width={50} height={50} />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>
@@ -119,10 +129,11 @@ const MoreScreen = ({ navigation }) => {
           </View>
 
           <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
 
         {/* link item */}
-        <TouchableOpacity
+        <AnimatedTouchableOpacity
+          entering={SlideInLeft.delay(300)}
           style={styles.listItem}
           onPress={() => navigation.navigate("Developer")}
         >
@@ -139,10 +150,14 @@ const MoreScreen = ({ navigation }) => {
           </View>
 
           <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
 
         {/* link item */}
-        <TouchableOpacity style={styles.listItem} onPress={handleLogout}>
+        <AnimatedTouchableOpacity
+          style={styles.listItem}
+          entering={SlideInLeft.delay(400)}
+          onPress={handleLogout}
+        >
           <AntDesign name="logout" size={50} color="black" />
 
           <View style={{ flex: 1, paddingHorizontal: 8 }}>
@@ -153,7 +168,7 @@ const MoreScreen = ({ navigation }) => {
           </View>
 
           <AntDesign name="right" size={24} color={primaryColor} />
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
