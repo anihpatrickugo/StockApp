@@ -1,9 +1,9 @@
 # StockApp Mobile App
 
 StockApp is a cross-platform moboile app for buying stocks. Here is the link to the
-[Download android only ](https://shopgrids.vercel.app/)
+[Download android only ](https://drive.google.com/file/d/1Hky7NDg2d6rhzYS2qOPBCME6r4_vqbe6/view?usp=drivesdk)
 
-This is an [Expo](https://docs.expo.dev/) project bootstrapped with [`create-expo-app`]([https://github.com/vercel/next.js/tree/canary/packages/create-next-app](https://docs.expo.dev/tutorial/introduction)).
+This is an [Expo](https://docs.expo.dev/) project bootstrapped with [`create-expo-app`](<[https://github.com/vercel/next.js/tree/canary/packages/create-next-app](https://docs.expo.dev/tutorial/introduction)>).
 
 ## Installation
 
@@ -38,7 +38,6 @@ pnpm start
 ```
 
 Use an expo app or mobile emulator to preview.
-
 
 ## Contributing
 

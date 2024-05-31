@@ -57,14 +57,15 @@ const SignUpScreen = ({navigation}) => {
         </Toast>
       )}
       
-      <Logo height={100} width={100}/>
 
-      <UI.CustomText size='md' bold>Create account</UI.CustomText>
-      <UI.CustomText size='xs'color={darkGrayColor} >Enter your details to continue</UI.CustomText>
 
 
       {/* form */}
-      <KeyboardAvoidingView >
+      <KeyboardAvoidingView behavior='position' >
+          <Logo height={100} width={100}/>
+
+          <UI.CustomText size='md' bold>Create account</UI.CustomText>
+          <UI.CustomText size='xs'color={darkGrayColor} >Enter your details to continue</UI.CustomText>
         
         {/* first name */}
         <View style={styles.textInput}>

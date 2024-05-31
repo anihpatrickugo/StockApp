@@ -20,6 +20,7 @@ const ConfirmStockScreen = ({navigation, route}) => {
   const [newPosition, {loading, error}] = useMutation(NEW_POSITION)
 
   const handlePosition = async(pin: string)=>{
+   
 
     newPosition({variables: {direction, ticker: item.ticker, volume: parseInt(amount), pin: parseInt(pin)},
       onCompleted: (data) => {

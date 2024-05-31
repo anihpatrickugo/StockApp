@@ -33,7 +33,7 @@ const StockDetailScreen = ({navigation, route}) => {
                  <UI.CustomText size='md' bold>{`$ ${item.price}`}</UI.CustomText>
           </Animated.View>
 
-          <Animated.Image sharedTransitionTag="Stock-Image" source={{uri: item.image}} style={{width: "100%", height: width *0.9}}/>
+          <Animated.Image sharedTransitionTag={`Stock-Image-${item.id}`} source={{uri: item.image}} style={{width: "100%", height: width *0.9}}/>
 
           <Animated.View entering={StretchInX.delay(500).damping(3000)} style={{width: "100%", padding: 4, marginVertical: 8}}>
            

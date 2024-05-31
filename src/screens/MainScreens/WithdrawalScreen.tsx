@@ -3,7 +3,8 @@ import { SafeAreaView, View, StyleSheet, StatusBar, Dimensions} from 'react-nati
 import * as UI from '../../components/common'
 import { danger, success } from '../../components/common/variables';
 const { width, height} = Dimensions.get("screen")
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { MINIMUM_WITHDRAWAL_AMOUNT } from '../../graphql/queries/siteDetails';
 import { NEW_WITHDRAWAL } from '../../graphql/mutations/TransactionsMutations';
 import Toast from 'react-native-root-toast';
 
@@ -11,11 +12,25 @@ import Toast from 'react-native-root-toast';
 const WithdrawalScreen = ({navigation}) => {
 
   const [amount, setAmount] = React.useState<string | null>(null);
-
+  
+  const { data: minimum } = useQuery(MINIMUM_WITHDRAWAL_AMOUNT)
   const [deposit, {loading, error}] = useMutation(NEW_WITHDRAWAL)
 
 
   const handleDeposit = async() => {
+
+    if (amount < minimum?.minimumWithdrawal) {
+      Toast.show(`Amount must be from $${minimum?.minimumWithdrawal} and above`, {
+        duration: Toast.durations.LONG,
+        visible: true,
+        position: 60,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        backgroundColor: danger,
+      });
+      return
+  }
 
     deposit({variables: {amount: parseInt(amount)},
     onCompleted: (data) => {

@@ -1,18 +1,17 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity, Dimensions } from 'react-native'
-import { Feather } from '@expo/vector-icons';
+import { SafeAreaView, StyleSheet, StatusBar, View, Image, TouchableOpacity, Dimensions } from 'react-native'
 import * as UI from '../../components/common/index';
 import {darkGrayColor, grayColor, primaryColor} from '../../components/common/variables'
 import Fund from '../../assets/icons/Fund';
 import Withdraw from '../../assets/icons/Withdraw';
 import Invest from '../../assets/icons/Invest';
-import BellOutline from '../../assets/icons/BellOutline';
 import VerticalListLoadingSkeleton from '../../components/LoadingSkeletons/VerticalListLoadingSkeleton';
 import { FontAwesome5 } from '@expo/vector-icons';
 import TransactionList from '../../components/main/TransactionList';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { GET_TRANSACTIONS } from '../../graphql/queries/transanctions';
+import AccountBalanceCard from '../../components/main/AccountBalanceCard';
 
 
 
@@ -20,7 +19,6 @@ const { width, height} = Dimensions.get("screen")
 
 
 const HomeScreen = ({navigation}) => {
-    const [showBalance, setShowBalance] = React.useState(true)
     
     const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -50,30 +48,14 @@ const HomeScreen = ({navigation}) => {
                <UI.CustomText size='md' bold style={{marginLeft: 10}}>HI {user?.firstName.toUpperCase() || null}</UI.CustomText>
             </View>
 
-            <Pressable onPress={()=>navigation.navigate('Notifications')}>
+            {/* <Pressable onPress={()=>navigation.navigate('Notifications')}>
                 <BellOutline height={25} width={25}/>
-            </Pressable>
+            </Pressable> */}
         </View>
 
         {/* account balance and currency */}
-        <View style={styles.accountBalance}>
-            <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
-                <View >
-                   <UI.CustomText size='sm' color='#F6F6FE'>Account Balance</UI.CustomText>
-                    <UI.CustomText size='xl' color='#F6F6FE' bold style={{marginVertical: 1}}>{!showBalance ? `$ ${user?.balance}` : '*****'}</UI.CustomText>
-                </View>
-
-                {/* acoordion */}
-                <UI.Accordion/> 
-            </View>
-
-            <Pressable style={{alignSelf: 'flex-end'}} onPress={()=>setShowBalance(!showBalance)}>
-                {showBalance ? 
-                  (<Feather name="eye" size={24} color="#F6F6FE" />)
-                : 
-                (<Feather name="eye-off" size={24} color="#F6F6FE" />)}
-            </Pressable>
-        </View>
+        <AccountBalanceCard balance={user?.balance}/>
+        
 
         {/* actions */}
         <View style={styles.actions}>
@@ -87,7 +69,7 @@ const HomeScreen = ({navigation}) => {
                 <UI.CustomText size='sm'>Withdraw</UI.CustomText>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.actionItems} onPress={()=>navigation.navigate("Stock-Market")}>
+            <TouchableOpacity style={styles.actionItems} onPress={()=>navigation.navigate("Invest")}>
                 <Invest height={65} width={65}/>
                 <UI.CustomText size='sm'>Invest</UI.CustomText>
             </TouchableOpacity>
@@ -142,15 +124,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-
-    accountBalance: {
-       width: '100%',
-       backgroundColor: primaryColor,
-       borderRadius: 16,
-       marginVertical: 10,
-       padding: 12
-    },
-
 
     actions: {
         flexDirection: 'row',

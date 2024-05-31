@@ -19,6 +19,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/slices/authSlice";
 import { removeToken } from "../../redux/slices/authSlice";
 import Animated, {
   SlideInLeft,
@@ -45,6 +46,7 @@ const MoreScreen = ({ navigation }) => {
         onPress: async () => {
           await AsyncStorage.removeItem("token");
           dispatch(removeToken());
+          dispatch(setUser(null));
         },
       },
     ]);

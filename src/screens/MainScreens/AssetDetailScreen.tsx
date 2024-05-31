@@ -73,7 +73,7 @@ const AssetDetailScreen = ({navigation, route}) => {
                  <UI.CustomText size='xs' color={item.currentPercent > 0 ? success: 'red' }>{`${item.currentPercent > 0 ? '▲': '▼' } ${item.currentPercent}%`}</UI.CustomText>
           </Animated.View>
 
-          <View style={{flexDirection: "row", gap: 8}}>
+          {/* <View style={{flexDirection: "row", gap: 8}}>
             <UI.SmallButton size='small' text='Day' variant={duration === "Day" ?'coloured' : "light-gray"} onPress={()=>setDuration("Day")}/>
             <UI.SmallButton size="small" text='Week' variant={duration === "Week" ?'coloured' : "light-gray"} onPress={()=>setDuration("Week")}/>
             <UI.SmallButton size="small" text='Month' variant={duration === "Month" ?'coloured' : "light-gray"} onPress={()=>setDuration("Month")}/>
@@ -82,10 +82,14 @@ const AssetDetailScreen = ({navigation, route}) => {
 
           <View>
             <Chart duration={duration}/>
-          </View>
+          </View> */}
 
           <Animated.View entering={StretchInX.delay(500).damping(3000)} style={{width: "100%", padding: 4, marginVertical: 8}}>
            
+            <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
+                <UI.CustomText size='sm'>Position</UI.CustomText>
+                <UI.CustomText size='sm'>{item.direction}</UI.CustomText>
+            </View>
             <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
                 <UI.CustomText size='sm'>Open</UI.CustomText>
                 <UI.CustomText size='sm'>{`$ ${item.price}`}</UI.CustomText>

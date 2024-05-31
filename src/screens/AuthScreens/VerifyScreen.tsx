@@ -18,9 +18,9 @@ const VerifyScreen = ({navigation}) => {
       // apollo mutation
      const [verifyUser, { data, loading, error }] = useMutation(VERIFY_USER);
 
-    const handleSendCode = () => {
+    const handleSendCode = (otp: string) => {
       verifyUser({
-        variables: { token: code },
+        variables: { token: otp },
         onCompleted: (data) => {
           // console.log(data);
           if (data.verifyUser.success) {
@@ -71,7 +71,7 @@ const VerifyScreen = ({navigation}) => {
           autoFocusOnLoad={false}
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
-          onCodeFilled = {handleSendCode}
+          onCodeFilled = {code => handleSendCode(code) }
 
 />
       </View>

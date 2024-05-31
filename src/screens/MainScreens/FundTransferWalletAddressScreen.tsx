@@ -8,18 +8,22 @@ import { grayLightColor, success } from '../../components/common/variables';
 import QRCode from 'react-native-qrcode-svg';
 import Toast from 'react-native-root-toast';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { useQuery } from '@apollo/client';
+import { WALLET_ADDRESS } from '../../graphql/queries/siteDetails';
 
 const { width, height} = Dimensions.get("screen")
 
-const WALLET_ADDRESS = "TSAfYQqKuqSVqqnS7NEjamAauAZUGdaUrr"
+// const WALLET_ADDRESS = "TSAfYQqKuqSVqqnS7NEjamAauAZUGdaUrr"
 
 
 const FundTransferWalletAddressScreen = ({navigation}) => {
 
+  const { data, loading, error } = useQuery(WALLET_ADDRESS)
+
   const [copied, setCopied] = React.useState(false)
 
   const copyToClipboard = async () => {
-    await Clipboard.setStringAsync(WALLET_ADDRESS);
+    await Clipboard.setStringAsync(data?.walletAddress);
     // Display a success message 
     let toast = Toast.show('Wallet Address copied to clipboard.', {
       duration: Toast.durations.SHORT,
@@ -61,7 +65,7 @@ const FundTransferWalletAddressScreen = ({navigation}) => {
               {/* <NumIcon width={45} height={45}/> */}
               <View>
                  <UI.CustomText size='xs'>Wallet Address</UI.CustomText>
-                 <UI.CustomText size='md'>{WALLET_ADDRESS}</UI.CustomText>
+                 <UI.CustomText size='md'>{data?.walletAddress}</UI.CustomText>
               </View>
           </View>
           <Pressable onPress={copyToClipboard}>
@@ -81,7 +85,7 @@ const FundTransferWalletAddressScreen = ({navigation}) => {
 
         <View style={{alignSelf: 'center', alignItems:"center", marginVertical: 20}}>
         <QRCode
-               value={WALLET_ADDRESS}
+               value={data?.walletAddress}
                logo={require('../../assets/icons/Tether.png')}
                logoSize={20}
                logoBackgroundColor='transparent'

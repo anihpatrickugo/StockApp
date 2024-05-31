@@ -10,7 +10,7 @@ const StockItem = ({item, delay, navigation}) => {
   return (
                   <AnimatedTouchableOpacity entering={SlideInLeft.delay(delay)} style={styles.transactionItem}  onPress={()=>navigation.navigate("Stock-Detail", {item})}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Animated.Image sharedTransitionTag="Stock-Image" source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
+                            <Animated.Image sharedTransitionTag={`Stock-Image-${item.id}`} source={{uri: item.image}} height={40} width={40} style={{borderRadius: 20}}/>
                             <View style={{marginLeft: 6}}>
                                <UI.CustomText size='sm'>{item.name}</UI.CustomText>
                                <UI.CustomText size='xs'>{item.ticker}</UI.CustomText>

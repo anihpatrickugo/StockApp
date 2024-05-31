@@ -2,13 +2,12 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, StatusBar, View, Image, Pressable, TouchableOpacity, FlatList, Dimensions} from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import * as UI from '../../components/common/index';
-import {grayColor, grayLightColor, primaryColor, success} from '../../components/common/variables'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import recentTransactions from '../../constants/recentTransactions';
+import {primaryColor, success} from '../../components/common/variables'
 import FundAlertModal from '../../components/main/FundAlert.Modal';
 import StockMarketList from '../../components/main/StockMarketList';
 import { useSelector } from 'react-redux';
 import MyAssetsList from '../../components/main/MyAssetsList';
+import AccountBalanceCard from '../../components/main/AccountBalanceCard';
 
 const { width, height} = Dimensions.get("screen")
 
@@ -33,32 +32,7 @@ const InvestScreen = ({navigation}) => {
         </View>
 
         {/* account balance and currency */}
-        <View style={styles.accountBalance}>
-            <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
-                <View>
-                   <UI.CustomText size='sm' color='#F6F6FE'>Portfolio Balance</UI.CustomText>
-                    <UI.CustomText size='xl' color='#F6F6FE' bold style={{marginVertical: 1}}>{!showBalance ? `$ ${user.balance}` : '*****'}</UI.CustomText>
-                </View>
-
-                {/* acoordion */}
-                <UI.Accordion/> 
-            </View>
-
-            <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
-
-                <View style={{flexDirection: 'row', alignContent: 'center', gap: 6}}>
-                    <UI.CustomText size='sm' color='white' bold>+ ₦1500.00</UI.CustomText>
-                    <UI.CustomText size='xs' color={success}>^ 248%</UI.CustomText>
-                </View>
-
-               <Pressable style={{alignSelf: 'flex-end'}} onPress={()=>setShowBalance(!showBalance)}>
-                {showBalance ? 
-                  (<Feather name="eye" size={24} color="#F6F6FE" />)
-                : 
-                (<Feather name="eye-off" size={24} color="#F6F6FE" />)}
-               </Pressable>
-            </View>
-        </View>
+        <AccountBalanceCard balance={user?.balance}/>
 
 
         {/* My assets */}
@@ -95,15 +69,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-
-    accountBalance: {
-       width: '100%',
-       backgroundColor: primaryColor,
-       borderRadius: 16,
-       marginVertical: 10,
-       padding: 12
-    },
-
 
     actions: {
         flexDirection: 'row',

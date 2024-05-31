@@ -22,7 +22,7 @@ const ProfileScreen = ({navigation}) => {
       <UI.CustomText size='md' bold>Account Details</UI.CustomText>
 
 
-     {/* Transfer Details */}
+     {/* Account Details */}
      <View style={styles.details}>
 
          {/* row */}
@@ -73,10 +73,12 @@ const ProfileScreen = ({navigation}) => {
           </View>
         </View>
 
-
       </View>
 
-      <UI.Button text='Edit Profile' variant='coloured' onPress={()=>navigation.navigate("Edit-Profile")}/>
+
+      <View style={{marginBottom: 30}}>
+         <UI.Button text='Edit Profile' variant='coloured' onPress={()=>navigation.navigate("Edit-Profile")}/>
+      </View>
     </SafeAreaView>
   )
 }

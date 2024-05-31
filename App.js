@@ -18,7 +18,7 @@ import { RootSiblingParent } from "react-native-root-siblings";
 
 // Create an HTTP link for the GraphQL endpoint
 const httpLink = createHttpLink({
-  uri: "http://192.168.43.254:8000/graphql/", // Replace with your GraphQL endpoint
+  uri: "https://stockapp-backend-4u6j.onrender.com/graphql/", // Replace with your GraphQL endpoint
 });
 
 // Middleware to set JWT token in the headers

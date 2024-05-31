@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, StatusBar, Image, Dimensions} from 'react-native'
 import * as UI from '../../components/common'
-import { danger, success} from '../../components/common/variables';
+import { danger, darkGrayColor, grayColor, success} from '../../components/common/variables';
 const { width, height} = Dimensions.get("screen")
 import { useSelector } from 'react-redux';
 import { useMutation} from '@apollo/client';
@@ -27,7 +27,7 @@ const PinSettingScreen = ({navigation}) => {
   const handlePinChange = async() => {
      
     if (newPin !== newPinAgain) {
-        let toast = Toast.show("New in don't match!", {
+        Toast.show("New in don't match!", {
             duration: Toast.durations.LONG,
             position: 60,
             shadow: true,
@@ -53,9 +53,13 @@ const PinSettingScreen = ({navigation}) => {
                 backgroundColor: success,
               });
           }
-        }
+        },
+
+        // onError: (error) => {
+        //   console.log(error.networkError.result.errors[0].message)
+        // }
+
          })
-        
       }
     }
 
@@ -83,8 +87,6 @@ const PinSettingScreen = ({navigation}) => {
     
   
 
-  
-
   return (
     <SafeAreaView style={styles.containner}>
       {loading || newPinLoading && <UI.Loading />}
@@ -98,7 +100,7 @@ const PinSettingScreen = ({navigation}) => {
                hideOnPress={true}
                backgroundColor={danger}
             >
-        {error.message} || {newPinError.message}
+        {error?.message} || {newPinError?.message}
      </Toast>
        )}
 
@@ -169,6 +171,7 @@ const PinSettingScreen = ({navigation}) => {
       <View style={styles.button}>
          <UI.Button text='Submit' variant='coloured' onPress={handlePinChange}/>
       </View>
+      <UI.CustomText size='md' color={darkGrayColor}>OR</UI.CustomText>
       <View style={styles.button}>
          <UI.Button text='Request New Pin' variant='light' onPress={handleRequestPin}/>
       </View>

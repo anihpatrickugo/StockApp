@@ -31,14 +31,16 @@ const EditProfileScreen = ({navigation}) => {
   const [camera, setCamera] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   
+  // user details
   const [photo, setPhoto] = useState(user.photo);
   const [firstname, setFirstname] = useState(user.firstName)
   const [lastname, setLastname] = useState(user.lastName)
   const [email, setEmail] = useState(user.email)
   const [walletAddress, setWalletAddress] = useState(user.walletAddress)
 
-
+  // extra states
   const [modalVisible, setModalVisible] = useState(false)
+  const [serializingPhoto, setSerializingPhoto] = useState(false)
 
 
 
@@ -91,16 +93,16 @@ const EditProfileScreen = ({navigation}) => {
       return
     }
     
-
+    setSerializingPhoto(true)
     let newFile = serializePhoto(photo)
     let imageFile = await uploadToCloudinary(newFile)
+    setSerializingPhoto(false)
    
-
 
     editUser({variables: {firstname, lastname, email, walletAddress, photo: imageFile},
     onCompleted: (data) => {
       if (data) {
-        navigation.navigate('Invest')
+        navigation.navigate('Profile')
         
         Toast.show('Successfully Edited Profile.', {
             duration: Toast.durations.LONG,
@@ -168,9 +170,9 @@ const EditProfileScreen = ({navigation}) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.containner}>
+    <View style={styles.containner}>
 
-      {loading && <UI.Loading />}
+      {loading || serializingPhoto && <UI.Loading />}
 
       {error && (
         <Toast
@@ -197,6 +199,7 @@ const EditProfileScreen = ({navigation}) => {
             takePicture={takePicture} 
             toggleCamera={toggleCamera}/>
      )}
+     
     
    
 
@@ -205,8 +208,8 @@ const EditProfileScreen = ({navigation}) => {
 
       
       {/* form */}
-      <KeyboardAvoidingView style={styles.form}>
-        
+      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={-145} style={styles.form}>
+
          {/* row */}
          <Pressable style={{alignSelf: 'center', marginVertical: 20}} onPress={()=>setModalVisible(true)}>
             {photo || user.photo ? (
@@ -224,7 +227,6 @@ const EditProfileScreen = ({navigation}) => {
             
         
          </Pressable>
-
 
         {/* first name */}
         <View style={styles.textInput}>
@@ -275,7 +277,7 @@ const EditProfileScreen = ({navigation}) => {
         </View>
         
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   )
 }
 
