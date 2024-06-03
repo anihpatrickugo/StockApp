@@ -76,7 +76,7 @@ const ProfileScreen = ({navigation}) => {
       </View>
 
 
-      <View style={{marginBottom: 30}}>
+      <View style={{marginBottom: 50}}>
          <UI.Button text='Edit Profile' variant='coloured' onPress={()=>navigation.navigate("Edit-Profile")}/>
       </View>
     </SafeAreaView>
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         padding: 14,
         width: width,
         height: height,
+        flex: 1,
         
     },
 

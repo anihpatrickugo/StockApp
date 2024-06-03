@@ -40,10 +40,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: height,
     width: width,
+    flex: 1
   },
 
   message: {
     alignItems: "center",
+    flex: 1
+  
   },
 
   icon: {
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
   buttonContainner: {
     width: "100%",
     position: "absolute",
-    bottom: 30,
+    bottom: 50,
   },
 });
 export default SuccesScreen;
